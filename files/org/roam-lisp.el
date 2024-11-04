@@ -1,4 +1,5 @@
 (use-package emacsql :ensure t)
+(require 'attachment-lisp)
 
 (use-package org-roam
   :ensure t
@@ -35,13 +36,46 @@
 ;  :bind-keymap
 ;  ("C-c n d" . org-roam-dailies-map)
   :hydra
+  (org-roam-dailies-hydra (:color blue :hint nil)
+			  "
+^Org Dailies Command:
+^View Date^           ^View Note^
+_d_: Today            _f_: Next
+_y_: Yesterday        _b_: Previous
+_t_: Tomorrow         ^Capture Date^
+_c_: Date in Calendar _n_: Today
+^ ^                   _c_: Date in Calendar
+"
+			  ("d" org-roam-dailies-goto-today)
+			  ("y" org-roam-dailies-goto-yesterday)
+			  ("t" org-roam-dailies-goto-tomorrow)
+			  ("c" org-roam-dailies-goto-date)
+			  ("f" org-roam-dailies-goto-next-note)
+			  ("b" org-roam-dailies-goto-previous-note)
+			  ("n" org-roam-dailies-capture-today)
+			  ("v" org-roam-dailies-capture-date)
+			  )
   (org-roam-hydra (:color blue :hint nil)
-		  ("c" org-roam-capture "Org Roam Capture")
-		  ("C" org-capture "Org Capture")
-		  ("C-c" org-id-get-create "Create Id")
-		  ("f" org-roam-node-find "Find")
-		  ("i" org-roam-node-insert "Insert")
-		  ("u" org-roam-ui-open "Open Ui")
+		  "
+^Org Note Command:
+^Notes^           ^Modification^   ^Other
+^^^-----------------------------------------------
+_C_: Capture Org  _C-c_: Create Id _u_: Open Ui
+_c_: Capture Roam _t_: Add Tag     _D_: Sync Database
+_f_: Find Roam    _T_: Remove Tag  _d_: Open Dailies
+_i_: Insert Roam  _I_: Import File
+"
+		  ("c" org-roam-capture)
+		  ("C" org-capture)
+		  ("f" org-roam-node-find)
+		  ("i" org-roam-node-insert)
+		  ("C-c" org-id-get-create)
+		  ("t" org-roam-tag-add)
+		  ("T" org-roam-tag-remove)
+		  ("I" org-import-attachments)
+		  ("u" org-roam-ui-open)
+		  ("D" org-roam-db-sync)
+		  ("d" org-roam-dailies-hydra/body)
 		  )
   :config
   (cl-defmethod org-roam-node-type ((node org-roam-node))

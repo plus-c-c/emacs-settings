@@ -10,7 +10,19 @@
   :config
   (global-lsp-bridge-mode))
 (use-package dape
-  :ensure t)
+  :ensure t
+  :preface
+  (setq dape-key-prefix "\C-x\C-a")
+  :hook
+  (dape-display-source . pulse-momentary-highlight-one-line)
+  (dape-start . (lambda () (save-some-buffers t t)))
+  (dape-compile . kill-buffer)
+  :config
+  (dape-breakpoint-global-mode)
+  (setq dape-buffer-window-arrangement 'right)
+  (setq dape-inlay-hints t)
+  (setq dape-cwd-fn 'projectile-project-root)
+  )
 
 (setq treesit-language-source-alist
       '((bash . ("https://github.com/tree-sitter/tree-sitter-bash"))

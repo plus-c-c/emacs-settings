@@ -11,7 +11,7 @@
   (dashboard-icon-type 'all-the-icons)
   (dashboard-items '((recents . 5) (bookmarks . 5) (agenda . 10)))
   :bind
-  (("C-c d" . dashboard-open)
+  (("C-c D" . dashboard-open)
    :map dashboard-mode-map
    ("O" . org-roam-ui-open)
 ))

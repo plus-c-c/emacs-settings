@@ -29,6 +29,8 @@
   (projectile-mode-line "Projectile")
   (projectile-track-known-projects-automatically nil)
   (projectile-git-submodule-command nil)
+  :hook
+  (prog-mode . projectile-mode)
   :bind
   ("C-c p" . projectile-hydra/body)
   :hydra
@@ -36,7 +38,7 @@
 "
 ^Projectile((x+) 4 : other window (x+) 5 : other frame)
 ^Find File^                          ^Code&Project Jump^          ^Buffer in Project^  ^Project Process^   ^Other
-^^^^----------------------------------------------------------------------------------------------------------------
+^^^^------------------------------------------------------------------------------------------------------------------------------------
 _f_: in the project(4|5)             _t_: implementation or test  _b_: switch(4|5)     _v_: vc             _E_: edit local variables for emacs
 _F_: in all known projects           _T_: test                    _k_: kill            _V_: browse dirty   _R_: regenerate tag
 _a_: with different extensions(4|5)  _?_: reference               _O_: display(auto 4) _C_: configure      _j_: find tag
