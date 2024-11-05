@@ -63,6 +63,12 @@
 (add-hook 'go-mode-hook #'(lambda () (treesit-parser-create 'go)))
 (add-hook 'java-mode-hook #'(lambda () (treesit-parser-create 'java)))
 (add-hook 'java-ts-mode-hook #'(lambda () (treesit-parser-create 'java)))
+(add-hook 'javascript-mode-hook #'(lambda () (treesit-parser-create 'javascript)))
+(add-hook 'javascript-ts-mode-hook #'(lambda () (treesit-parser-create 'javascript)))
+(add-hook 'typescript-mode-hook #'(lambda () (treesit-parser-create 'typescript)))
+(add-hook 'typescript-ts-mode-hook #'(lambda () (treesit-parser-create 'typescript)))
+(add-hook 'typescript-tsx-mode-hook #'(lambda () (treesit-parser-create 'tsx)))
+
 (add-hook 'php-mode-hook #'(lambda () (treesit-parser-create 'php)))
 (add-hook 'php-ts-mode-hook #'(lambda () (treesit-parser-create 'php)))
 (add-hook 'sh-mode-hook #'(lambda () (treesit-parser-create 'bash)))

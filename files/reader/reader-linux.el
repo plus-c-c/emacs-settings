@@ -8,6 +8,9 @@
 
 (use-package eaf-browser :after eaf
   :custom
+  (eaf-proxy-port "7890")
+  (eaf-proxy-type "http")
+  (eaf-proxy-host "127.0.0.1")
   (eaf-browser-continue-where-left-off t)
   (eaf-browser-enable-adblocker nil)
   (browse-url-browser-function 'eaf-open-browser)
