@@ -1,8 +1,29 @@
 (use-package emacsql :ensure t)
-(require 'attachment-lisp)
-
 (use-package org-roam
   :ensure t
+  :init
+  (defun counsel-import-file-action (x)
+    "Find file X."
+    (cond ((and counsel-find-file-speedup-remote
+		(file-remote-p ivy--directory))
+           (let ((find-file-hook nil))
+             (insert (expand-file-name x ivy--directory))))
+          ((member (file-name-extension x) counsel-find-file-extern-extensions)
+           (counsel-find-file-extern x))
+          (t
+           (insert (expand-file-name x ivy--directory)))))
+  (defun org-import-attachments ()
+    "Import attachments."
+    (interactive)
+    (progn
+      (insert "[[")
+      (counsel--find-file-1 "Import File: "
+			    default-directory
+			    #'counsel-import-file-action
+			    'counsel-import-attachments
+			    )
+      (insert "]]")
+      ))
   :custom
   (org-roam-directory (get-directory-auto-create note-directory "roam-notes"))
   (org-directory (get-directory-auto-create note-directory "org-notes"))
