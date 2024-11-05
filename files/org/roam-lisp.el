@@ -17,7 +17,7 @@
          :unnarrowed t)
         ("r" "reference" plain "%?"
          :if-new
-         (file+head "reference/${title}.org" "#+title: ${title}\n")
+         (file+head "reference/${title}.org" "#+title: ${title}\n#+filetags: :reference:\n")
          :immediate-finish t
          :unnarrowed t)
         ("a" "article" plain "%?"
