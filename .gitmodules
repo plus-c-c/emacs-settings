@@ -1,12 +1,12 @@
 [submodule "emacs-application-framework"]
 path = site-lisp/emacs-application-framework
-url = https://github.com/emacs-eaf/emacs-application-framework.git
+url = https://github.com/emacs-eaf/emacs-application-framework
 [submodule "fingertip"]
 path = site-lisp/fingertip
-url = https://github.com/manateelazycat/fingertip.git
+url = https://github.com/manateelazycat/fingertip
 [submodule "lsp-bridge"]
 path = site-lisp/lsp-bridge
-url = https://github.com/manateelazycat/lsp-bridge.git
+url = https://github.com/manateelazycat/lsp-bridge
 [submodule "auto-save"]
 path = site-lisp/auto-save
-url = https://github.com/manateelazycat/auto-save.git
+url = https://gitgithub.com/manateelazycat/auto-save
