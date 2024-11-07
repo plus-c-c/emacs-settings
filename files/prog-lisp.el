@@ -27,7 +27,7 @@
   :ensure t
   :custom
   (projectile-mode-line "Projectile")
-  (projectile-track-known-projects-automatically nil)
+  (projectile-track-known-projects-automatically t)
   (projectile-git-submodule-command nil)
   :hook
   (prog-mode . projectile-mode)

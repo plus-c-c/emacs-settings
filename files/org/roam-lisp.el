@@ -110,7 +110,7 @@ _i_: Insert Roam  _I_: Import File
   (get-directory-auto-create org-roam-directory "daily")
   (require 'org-roam-dailies)
   (setq org-roam-database-connector 'sqlite)
-  (org-roam-db-autosync-mode))
+  )
 
 (use-package org-roam-ui
   :ensure t
