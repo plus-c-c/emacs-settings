@@ -1,11 +1,3 @@
-(use-package holo-layer
-  :load-path "~/.emacs.d/site-lisp/holo-layer"
-  :custom
-  (holo-layer-enable-place-info t)
-  (holo-layer-place-info-font-size 24)
-  (holo-layer-enable-cursor-animation t)
-  :config
-  (holo-layer-enable))
 (require 'subr-x) ;; cl-loop来自这里
 (defvar cabins--fonts-default '("SauceCodePro Nerd Font" "Cascadia Code PL" "Menlo" "Consolas"))
 (defvar cabins--fonts-unicode '("Segoe UI Symbol" "Symbola" "Symbol"))
