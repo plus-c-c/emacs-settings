@@ -26,7 +26,4 @@
 	   (use-package eaf :diminish eaf-mode
 	     :custom
 	     (eaf-find-alternate-file-in-dired t))))
-(if (eq system-type 'gnu/linux)
-    (use-package straight
-      :load-path "~/.emacs.d/site-lisp/straight"))
 (provide 'package-lisp)

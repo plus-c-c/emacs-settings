@@ -1,8 +1,12 @@
 *
 !init.el
 !early-init.el
+!files
+!files/*
 !files/**/*
 
 !.gitignore
 !.gitmodules
+!site-lisp
+!site-lisp/*
 !site-lisp/**/*

@@ -22,7 +22,6 @@
   (eaf-webengine-font-family "WenQuanYi Micro Hei Mono")
   (eaf-browser-extension-list
    '("html" "htm"))
-  (eaf-browser-dark-mode-theme 'light)
   :config
   (defalias 'browse-web #'eaf-open-browser)
   )
