@@ -1,3 +1,4 @@
+(require 'lang-hooks-config)
 (use-package yasnippet
   :ensure t
   :diminish yas-minor-mode
@@ -41,6 +42,7 @@ _i_,_I_: Find Implication       _l_: List Diagnoses
   :commands global-lsp-bridge-mode
   )
 (global-lsp-bridge-mode)
+(add-hook-list language-modes-list 'lsp-bridge-mode)
 (use-package dape
   :ensure t
   :preface
