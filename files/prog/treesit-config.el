@@ -116,5 +116,13 @@
   (define-key fingertip-mode-map (kbd "M-:") 'fingertip-jump-out-pair-and-newline)
 
   (define-key fingertip-mode-map (kbd "C-M-j") 'fingertip-jump-up)
+
+  (defun fingertip-is-lisp-mode-p ()
+    (or (derived-mode-p 'lisp-mode)
+	(derived-mode-p 'racket-mode)
+	(derived-mode-p 'emacs-lisp-mode)
+	(derived-mode-p 'inferior-emacs-lisp-mode)
+	(derived-mode-p 'clojure-mode)
+	(derived-mode-p 'clojure-ts-mode)))
   )
 (provide 'treesit-config)

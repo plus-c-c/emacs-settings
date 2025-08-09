@@ -11,7 +11,8 @@
   :config
   (add-to-list 'language-modes-list 'racket-mode)
   :defer t
-  :mode ("\\.rktl\\'" . racket-mode))
+  :mode ("\\.rktl\\'" . racket-mode)
+  )
 (setq lsp-bridge-python-lsp-server 'pylsp)
 (use-package python-mode
   :ensure t
