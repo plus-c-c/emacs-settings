@@ -1,3 +1,9 @@
+(use-package dashboard-config :after dashboard
+  :config
+  (add-to-list 'dashboard-items '(external-devices . 10))
+  (add-to-list 'dashboard-item-shortcuts '(external-devices . "d"))
+  )
+
 (require 'subr-x) ;; cl-loop来自这里
 (defvar cabins--fonts-default '("SauceCodePro Nerd Font" "Cascadia Code PL" "Menlo" "Consolas"))
 (defvar cabins--fonts-unicode '("Segoe UI Symbol" "Symbola" "Symbol"))

@@ -1,5 +1,9 @@
 (add-to-list 'load-path (expand-file-name "files/org" user-emacs-directory))
 (defconst note-directory (get-directory-auto-create "" (if (eq system-type 'gnu/linux) "~/Documents/emacs/" "D:/emacs/")) "The directory of my notes.")
+(use-package org
+  :hook
+  (org-mode . toggle-truncate-lines)
+  )
 (require 'ref-lisp)
 (require 'roam-lisp)
 (require 'org-export-lisp)

@@ -1,6 +1,6 @@
 (add-to-list 'load-path (expand-file-name "site-lisp/emacs-application-framework" user-emacs-directory))
 
-(use-package eaf :diminish eaf-mode :defer 0.3
+(use-package eaf :diminish eaf-mode
   :custom
   (eaf-find-alternate-file-in-dired t))
 
