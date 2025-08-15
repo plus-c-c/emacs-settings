@@ -22,6 +22,7 @@
   (eaf-webengine-font-family "WenQuanYi Micro Hei Mono")
   (eaf-browser-extension-list
    '("html" "htm"))
+  (eaf-browser-auto-import-chrome-cookies t)
   :config
   (defalias 'browse-web #'eaf-open-browser)
   )
