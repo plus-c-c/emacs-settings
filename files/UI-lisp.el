@@ -29,16 +29,18 @@
           "Google"
           "Browse Google"
           (lambda (&rest _) (browse-url "github.com")))
-         (,(all-the-icons-material "bubble_chart" :height 1.1 :v-adjust -0.2)
-	  "ORUI"
-	  "Show org-roam-ui page"
-	  (lambda (&rest _) (org-roam-ui-open)))
-         )
+	 )
+
 	(
-	 (,(all-the-icons-faicon "database" :height 1.1 :v-adjust -0.2)
+	 (,(all-the-icons-faicon "database" :height 1.1 :v-adjust -0.1)
           "Ebib"
           "Open Ebib"
           (lambda (&rest _) (ebib))
+	  warning)
+	 (,(all-the-icons-material "bubble_chart" :height 1.1 :v-adjust -0.2)
+	  "ORUI"
+	  "Show org-roam-ui page"
+	  (lambda (&rest _) (org-roam-ui-open))
 	  warning)
 	 )
 	))

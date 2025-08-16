@@ -13,6 +13,7 @@
   (eaf-proxy-host "127.0.0.1")
   (eaf-browser-continue-where-left-off t)
   (eaf-browser-enable-adblocker nil)
+  (eaf-browser-chrome-browser-name "Chromium")
   (browse-url-browser-function 'eaf-open-browser)
   (eaf-browse-blank-page-url "https://zjuers.com")
   (eaf-webengine-default-zoom "2.0")
@@ -20,7 +21,7 @@
   (eaf-webengine-fixed-font-size 20)
   (eaf-webengine-fixed-font-family "WenQuanyi Micro Hei Mono")
   (eaf-webengine-font-family "WenQuanYi Micro Hei Mono")
-  (eaf-browser-extension-list
+  (eaf-browser-extension-liste
    '("html" "htm"))
   (eaf-browser-auto-import-chrome-cookies t)
   :config
