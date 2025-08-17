@@ -27,7 +27,10 @@
   )
 (defun external-device-names ()
   "Get names of external devices."
-  (cddr (directory-files (expand-file-name (user-login-name) "/run/media")))
+  (if (directory-name-p (expand-file-name (user-login-name) "/run/media"))
+      (cddr (directory-files (expand-file-name (user-login-name) "/run/media")))
+    nil
+      )
   )
 (defun external-device-path (x)
    (expand-file-name x (expand-file-name (user-login-name) "/run/media")))

@@ -38,11 +38,53 @@
   :defer 0.8
   :after org-ref
   :bind
-  (("<f5>" . ebib)
-  (:map ebib-multiline-mode-map
-   ("C-c C-c" . ebib-quit-multiline-buffer-and-save)
-   ("C-c C-q" . ebib-cancel-multiline-buffer)
-   ("C-c C-s" . ebib-save-from-multiline-buffer)))
+  ("C-c e" . ebib)
+  (:map ebib-index-mode-map
+	("C-c r" . ebib-index-hydra/body))
+;  ("C-c r" . ebib-hydra/body)
+;  (:map ebib-multiline-mode-map
+;   ("C-c C-c" . ebib-quit-multiline-buffer-and-save)
+;   ("C-c C-q" . ebib-cancel-multiline-buffer)
+;   ("C-c C-s" . ebib-save-from-multiline-buffer)))
+  :hydra
+  (ebib-index-hydra (:color blue :hint nil)
+		    "
+| ^^Database          ^^ | ^^Entry         | ^^Search & Mark    | ^^Sort           | ^^Web
+|^^------------------ ^^-|-^^--------------|-^^-----------------|-^^---------------|--------
+| _s_,_S_: Save          | _a_: Add        | _/_: Search        | _<_: Asending    |
+|     _w_: Save As    ^^ | _d_: Delete     | _?_: Search Next   | _>_: Desending   |
+| _r_,_R_: Reload        | _k_: Kill (Cut) | ^^                 | _=_: Default     |
+|     _o_: Open File  ^^ | _y_: Yank       | _m_: Mark one      | ^^               |
+|     _i_: Import From^^ | _c_: Copy (Ce)  | _M_: Mark All/None | _F_: Filter Menu |
+|^^        (no Short) ^^ | _e_: Edit       | ^^   (C-u m)       | ^^               |
+"
+		    ("s" ebib-save-current-database)
+		    ("S" ebib-save-all-databases)
+		    ("w" ebib-write-database)
+		    ("r" ebib-reload-current-database)
+		    ("R" ebib-reload-all-databases)
+		    ("o" ebib-open-bibtex-file)
+		    ("i" ebib-merge-bibtex-file)
+
+		    ("a" ebib-add-entry)
+		    ("d" ebib-delete-entry)
+		    ("k" ebib-kill-entry)
+		    ("y" ebib-yank-entry)
+		    ("c" ebib-copy-entry)
+		    ("e" ebib-edit-entry)
+
+		    ("/" ebib-search)
+		    ("?" ebib-search-next)
+		    ("m" ebib-mark-entry)
+		    ("M" ebib-mark-all-entries)
+
+		    ("<" ebib-index-sort-ascending)
+		    (">" ebib-index-sort-descending)
+		    ("=" ebib-index-default-sort)
+
+		    )
+
+;  (("<f5>" . ebib)
   :custom
   (bibtex-autokey-name-case-convert-function 'capitalize)
   (bibtex-autokey-titlewords 0)

@@ -55,6 +55,9 @@
    :map dashboard-mode-map
    ("O" . org-roam-ui-open)
 ))
+
+(use-package ace-window :ensure t
+  :bind ("C-x o" . ace-window))
 (use-package org-superstar :ensure t :after org
   :hook
   (org-mode . org-superstar-mode)

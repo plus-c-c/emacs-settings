@@ -13,7 +13,7 @@
   :hydra
   (lsp-bridge-hydra (:color blue :hint nil)
   "
-LSP:(extra uppercase choice means other window)
+LSP:(uppercase choice - other window)
 ^^^^Find                        ^^Diagnose
 ^^^^----------------------------^^-----------------
 _d_,_D_: Find Definition        _p_: Jump Previous
