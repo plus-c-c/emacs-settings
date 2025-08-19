@@ -1,4 +1,4 @@
-(add-to-list 'load-path (expand-file-name "files/prog" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "codes" emacs-config-path))
 (require 'lang-hooks-config)
 (require 'treesit-config)
 (require 'lang-lisp)
@@ -107,4 +107,4 @@ _e_: recent                         ^ ^                  _L_: install        _o_
 (if (eq system-type 'gnu/linux)
     (require 'prog-linux)
   (require 'prog-win))
-(provide 'prog-lisp)
+(provide 'init-codes)

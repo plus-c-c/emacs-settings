@@ -1,4 +1,3 @@
-(defconst bibliography-directory (get-directory-auto-create note-directory "bibliography") "The directory of bibliography.")
 (use-package bibtex-completion
   :defer 0.8
   :ensure ivy-bibtex)
@@ -18,8 +17,7 @@
 	(mapcar (lambda (dir) (get-directory-auto-create bibliography-directory dir))
 		'("bibtex-pdfs")
 		)
-	bibtex-completion-notes-path
-	(get-directory-auto-create bibliography-directory "notes")
+	bibtex-completion-notes-path interleave-path
 	bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
 
 	bibtex-completion-additional-search-fields '(keywords)
@@ -49,14 +47,14 @@
   :hydra
   (ebib-index-hydra (:color blue :hint nil)
 		    "
-| ^^Database          ^^ | ^^Entry         | ^^Search & Mark    | ^^Sort           | ^^Web
-|^^------------------ ^^-|-^^--------------|-^^-----------------|-^^---------------|--------
-| _s_,_S_: Save          | _a_: Add        | _/_: Search        | _<_: Asending    |
-|     _w_: Save As    ^^ | _d_: Delete     | _?_: Search Next   | _>_: Desending   |
-| _r_,_R_: Reload        | _k_: Kill (Cut) | ^^                 | _=_: Default     |
-|     _o_: Open File  ^^ | _y_: Yank       | _m_: Mark one      | ^^               |
-|     _i_: Import From^^ | _c_: Copy (Ce)  | _M_: Mark All/None | _F_: Filter Menu |
-|^^        (no Short) ^^ | _e_: Edit       | ^^   (C-u m)       | ^^               |
+| ^^^^Database           | ^^Entry         | ^^Search & Mark    | ^^Sort           | ^^Reference      |
+|^^^^--------------------|-^^--------------|-^^-----------------|-^^---------------|-^^---------------|
+| _s_,_S_: Save          | _a_: Add        | _/_: Search        | _<_: Asending    | _uu_: Browse url |
+|   ^^_w_: Save As       | _d_: Delete     | _?_: Search Next   | _>_: Desending   | _ud_: Browse doi |
+| _r_,_R_: Reload        | _k_: Kill (Cut) | ^^                 | _=_: Default     | ^^               |
+|   ^^_o_: Open File     | _y_: Yank       | _m_: Mark one      | ^^               |  _p_: Open pdf   |
+|   ^^_i_: Import From   | _c_: Copy (Ce)  | _M_: Mark All/None | _f_: Filter Menu |  _n_: Open Note  |
+| ^^^^     (no Short)    | _e_: Edit       | ^^   (C-u m)       | ^^   (F)         | ^^               |
 "
 		    ("s" ebib-save-current-database)
 		    ("S" ebib-save-all-databases)
@@ -82,9 +80,36 @@
 		    (">" ebib-index-sort-descending)
 		    ("=" ebib-index-default-sort)
 
-		    )
+		    ("uu" ebib-browse-url)
+		    ("ud" ebib-browse-doi)
+		    ("p" ebib-view-file)
+		    ("n" (if (eq system-type 'gnu/linux)
+			     (prog1
+				 (ebib-view-file)
+			       (eaf-interleave-open-notes-file-auto-create)
+			       )
+			   (ebib-open-note))
+		     )
 
-;  (("<f5>" . ebib)
+		    ("f" ebib-filters-hydra/body))
+  (ebib-filters-hydra (:color blue :hint nil)
+		      "
+| ^^^^File        | ^^Operator |
+|-^^^^------------|------------|
+|   ^^_s_: Save   | _&_: And   |
+|   ^^_l_: Load   | _|_: Or    |
+|   ^^_r_: Rename | _~_: Not   |
+| _d_,_D_: Delete |            |
+"
+		      ("s" ebib-filters-save-filters)
+		      ("l" ebib--filters-load-file)
+		      ("r" ebib-filters-rename-filter)
+		      ("d" ebib-filters-delete-filter)
+		      ("D" ebib-filters-delete-all-filters)
+		      ("&" ebib-filters-logical-and)
+		      ("|" ebib-filters-logical-or)
+		      ("~" ebib-filters-logical-not)
+		      )
   :custom
   (bibtex-autokey-name-case-convert-function 'capitalize)
   (bibtex-autokey-titlewords 0)
@@ -93,8 +118,10 @@
   (ebib-bibtex-dialect 'biblatex)
   (ebib-index-window-size 10)
   (ebib-preload-bib-files bibtex-completion-bibliography)
-  (ebib-notes-directory bibtex-completion-notes-path)
+  (ebib-notes-directory interleave-path)
+  (ebib-notes-storage 'one-file-per-note)
   (ebib-file-search-dirs bibtex-completion-library-path)
+  (ebib-filters-default-file (get-file-auto-create bibliography-directory "ebib-filters.txt"))
   (ebib-reading-list-file (get-file-auto-create bibliography-directory "readinglist.org"))
   (ebib-keywords-file (get-file-auto-create bibliography-directory "ebib-keywords.txt"))
   (ebib-keywords-field-keep-sorted t)
@@ -143,4 +170,4 @@
   )
 
 
-(provide 'ref-lisp)
+(provide 'init-ref)

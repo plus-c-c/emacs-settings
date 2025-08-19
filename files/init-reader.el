@@ -1,0 +1,5 @@
+(add-to-list 'load-path (expand-file-name "reader" emacs-config-path))
+(if (eq system-type 'gnu/linux)
+    (require 'reader-linux)
+  (require 'reader-win))
+(provide 'init-reader)

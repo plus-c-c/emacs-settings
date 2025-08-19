@@ -8,6 +8,7 @@
 	    (nth 4 dev-list))
     )
   )
+
 (defun dashboard-insert-external-devices (list-size)
   "Add the list of LIST-SIZE items of external devices."
   (setq dashboard--projects-cache-item-format nil)
@@ -22,9 +23,10 @@
    (dashboard-external-device-format el)
    )
   )
+
 (add-to-list 'dashboard-item-generators
 	     '(external-devices . dashboard-insert-external-devices))
 
-
-
-(provide 'dashboard-config)
+(add-to-list 'dashboard-items '(external-devices . 10))
+(add-to-list 'dashboard-item-shortcuts '(external-devices . "d"))
+(provide 'linux-settings-dashboard)

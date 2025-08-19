@@ -119,4 +119,4 @@ _i_: Insert Roam  _I_: Import File
   (org-roam-ui-sync-theme t)
   (org-roam-ui-follow t)
   (org-roam-ui-update-on-save t))
-(provide 'roam-lisp)
+(provide 'init-roam)

@@ -3,7 +3,7 @@
 (defun eaf-interleave-open-notes-file-auto-create () "Auto create version for eaf-interleave-open-notes-file"
        (interactive)
        (progn (get-file-auto-create
-	       interleave-directory
+	       interleave-path
 	       (concat (file-name-base eaf--buffer-url) ".org"))
 	      (eaf-interleave-open-notes-file)))
 
@@ -42,9 +42,8 @@
 (use-package eaf-interleave
   :init
   (require 'org-roam)
-  (defvar interleave-directory (get-directory-auto-create org-roam-directory "interleave") "The directory of interleave")
   :custom
-  (eaf-interleave-org-notes-dir-list (cons interleave-directory nil))
+  (eaf-interleave-org-notes-dir-list (cons interleave-path nil))
   (eaf-interleave-split-direction 'vertical)
   (eaf-interleave-disable-narrowing t)
   (eaf-interleave-split-lines 20)

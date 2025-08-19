@@ -26,4 +26,4 @@
 	   (use-package eaf :diminish eaf-mode
 	     :custom
 	     (eaf-find-alternate-file-in-dired t))))
-(provide 'package-lisp)
+(provide 'init-packages)

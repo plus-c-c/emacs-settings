@@ -1,3 +1,4 @@
+(add-to-list 'load-path (expand-file-name "edit" emacs-config-path))
 (use-package ivy :ensure t
   :hook (after-init .ivy-mode)
   :custom
@@ -45,8 +46,7 @@
 	 ("C-M-P" . move-dup-duplicate-up)
 	 ("M-N"   . move-dup-move-lines-down)
 	 ("C-M-N" . move-dup-duplicate-down)))
-(add-to-list 'load-path (expand-file-name "files/edit" user-emacs-directory))
 (if (eq system-type 'gnu/linux)
     (require 'edit-linux)
   (require 'edit-win))
-(provide 'edit-lisp)
+(provide 'init-editor)
