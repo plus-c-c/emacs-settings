@@ -26,4 +26,4 @@
     (dolist (charset '(kana han bopomofo cjk-misc))
       (cabins--set-font-common charset (if cjk-fonts cjk-fonts cabins--fonts-cjk) 1.2))))
 (add-hook 'emacs-startup-hook #'cabins--font-setup)
-(provide 'UI-linux)
+(provide 'linux-UI)

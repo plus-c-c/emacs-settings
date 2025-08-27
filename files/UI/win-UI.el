@@ -3,4 +3,4 @@
   :config
   (cnfonts-mode 1)
   )
-(provide 'UI-win)
+(provide 'win-UI)

@@ -5,6 +5,6 @@
 
 
 (if (eq system-type 'gnu/linux)
-    (require 'UI-linux)
-  (require 'UI-win))
+    (require 'linux-UI)
+  (require 'win-UI))
 (provide 'init-UI)

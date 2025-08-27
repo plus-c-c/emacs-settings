@@ -37,24 +37,25 @@
   (lambda (x)
     (split-string x " "))
   (cdr (split-string (shell-command-to-string "df -h") "\n")))))
-
-(defun match-device-space (path list)
-  (cond
-   ((eq list nil)
-    nil)
-   ((string-equal (car (last (car list))) path)
-    (car list))
-   (t
-    (match-device-space path (cdr list))))
-  )
-
-(defun external-device-names ()
-  "Get names of external devices."
-  (if (file-exists-p (concat (expand-file-name (user-login-name) "/run/media") "/"))
-      (cddr (directory-files (expand-file-name (user-login-name) "/run/media")))
-    nil
+(if (eq system-type 'gnu/linux)
+    (prog1
+	(defun match-device-space (path list)
+	  (cond
+	   ((eq list nil)
+	    nil)
+	   ((string-equal (car (last (car list))) path)
+	    (car list))
+	   (t
+	    (match-device-space path (cdr list))))
+	  )
+      (defun external-device-names ()
+	"Get names of external devices."
+	(if (file-exists-p (concat (expand-file-name (user-login-name) "/run/media") "/"))
+	    (cddr (directory-files (expand-file-name (user-login-name) "/run/media")))
+	  nil
+	  )
+	)
+      (defun external-device-path (x)
+	(expand-file-name x (expand-file-name (user-login-name) "/run/media")))
       )
-  )
-
-(defun external-device-path (x)
-   (expand-file-name x (expand-file-name (user-login-name) "/run/media")))
+  nil)

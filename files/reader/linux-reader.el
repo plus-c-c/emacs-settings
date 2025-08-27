@@ -39,4 +39,4 @@
 
 (use-package eaf-all-the-icons  :after all-the-icons)
 
-(provide 'reader-linux)
+(provide 'linux-reader)

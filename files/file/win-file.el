@@ -8,4 +8,4 @@
   (super-save-delete-trailing-whitespace t)
   :config
   (super-save-mode +1))
-(provide 'file-win)
+(provide 'win-file)

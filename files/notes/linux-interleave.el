@@ -77,4 +77,4 @@
 
 
 
-(provide 'interleave-linux)
+(provide 'linux-interleave)
