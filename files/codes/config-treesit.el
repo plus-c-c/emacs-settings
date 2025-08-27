@@ -125,4 +125,4 @@
 	(derived-mode-p 'clojure-mode)
 	(derived-mode-p 'clojure-ts-mode)))
   )
-(provide 'treesit-config)
+(provide 'config-treesit)

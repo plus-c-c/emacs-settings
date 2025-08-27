@@ -4,17 +4,17 @@
 (use-package ivy-bibtex
   :ensure t
   :defer 0.8
-  :after bibtex-completion
+  :after (bibtex-completion ivy)
   :init
   (setq bibtex-completion-bibliography
-	(mapcar (lambda (file) (get-file-auto-create bibliography-directory file))
+	(mapcar (lambda (file) (expand-file-name-auto-create file bibliography-directory))
 		'("references.bib"
 		  "dei.bib"
 		  "master.bib"
 		  "archive.bib")
 		)
 	bibtex-completion-library-path
-	(mapcar (lambda (dir) (get-directory-auto-create bibliography-directory dir))
+	(mapcar (lambda (dir) (expand-directory-name-auto-create dir bibliography-directory))
 		'("bibtex-pdfs")
 		)
 	bibtex-completion-notes-path interleave-path
@@ -121,9 +121,9 @@
   (ebib-notes-directory interleave-path)
   (ebib-notes-storage 'one-file-per-note)
   (ebib-file-search-dirs bibtex-completion-library-path)
-  (ebib-filters-default-file (get-file-auto-create bibliography-directory "ebib-filters.txt"))
-  (ebib-reading-list-file (get-file-auto-create bibliography-directory "readinglist.org"))
-  (ebib-keywords-file (get-file-auto-create bibliography-directory "ebib-keywords.txt"))
+  (ebib-filters-default-file (expand-file-name-auto-create "ebib-filters.txt" bibliography-directory))
+  (ebib-reading-list-file (expand-file-name-auto-create "readinglist.org" bibliography-directory))
+  (ebib-keywords-file (expand-file-name-auto-create "ebib-keywords.txt" bibliography-directory))
   (ebib-keywords-field-keep-sorted t)
   (ebib-keywords-file-save-on-exit 'always)
   (ebib-file-associations '(("pdf")) "using Emacs to open pdf")

@@ -19,10 +19,10 @@
           "Github"
           "Browse Github"
           (lambda (&rest _) (browse-url "github.com")))
-	 (,(all-the-icons-faicon "google" :height 1.1 :v-adjust -0.1)
-          "Google"
-          "Browse Google"
-          (lambda (&rest _) (browse-url "github.com")))
+	 (,(all-the-icons-material "search" :height 1.1 :v-adjust -0.25)
+          "Search"
+          "Browse Search engine"
+          (lambda (&rest _) (browse-url "duckduckgo.com")))
 	 )
 
 	(
@@ -31,13 +31,17 @@
           "Open Ebib"
           (lambda (&rest _) (ebib))
 	  warning)
+	 (,(all-the-icons-faicon "calendar" :height 1.1 :v-adjust -0.1)
+          "Agenda"
+          "Open Agenda"
+          (lambda (&rest _) (projectile-switch-project-by-name org-agenda-directory))
+	  warning)
 	 (,(all-the-icons-material "bubble_chart" :height 1.1 :v-adjust -0.2)
 	  "ORUI"
 	  "Show org-roam-ui page"
 	  (lambda (&rest _) (org-roam-ui-open))
 	  warning)
-	 )
-	))
+	)))
   (dashboard-projects-backend 'projectile)
   (dashboard-icon-type 'all-the-icons)
   (dashboard-items '((recents . 5)
@@ -47,6 +51,6 @@
   :bind
   (("C-c d" . dashboard-open)
    :map dashboard-mode-map
-   ("O" . org-roam-ui-open)
-))
+   ("O" . org-roam-ui-open))
+  )
 (provide 'settings-dashboard)

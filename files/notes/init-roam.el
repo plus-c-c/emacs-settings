@@ -25,8 +25,7 @@
       (insert "]]")
       ))
   :custom
-  (org-roam-directory (get-directory-auto-create note-directory "roam-notes"))
-  (org-directory (get-directory-auto-create note-directory "org-notes"))
+  (org-roam-directory (expand-directory-name-auto-create note-directory "roam-notes"))
   (org-roam-dailies-directory "daily/")
   (org-roam-db-gc-threshold most-positive-fixnum)
   (org-roam-capture-templates
@@ -107,7 +106,7 @@ _i_: Insert Roam  _I_: Import File
         (file-name-directory
          (file-relative-name (org-roam-node-file node) org-roam-directory))))
     (error "")))
-  (get-directory-auto-create org-roam-directory "daily")
+  (expand-directory-name-auto-create "daily" org-roam-directory)
   (require 'org-roam-dailies)
   (setq org-roam-database-connector 'sqlite)
   )

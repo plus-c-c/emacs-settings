@@ -50,4 +50,4 @@
   (dolist (hook list)
     (add-hook hook function))
   )
-(provide 'lang-hooks-config)
+(provide 'config-lang-hooks)

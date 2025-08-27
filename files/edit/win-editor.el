@@ -1,2 +1,2 @@
 (require 'pasteex-mode)
-(provide 'edit-win)
+(provide 'win-editor)

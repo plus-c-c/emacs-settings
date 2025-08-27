@@ -7,6 +7,4 @@
 
 !.gitignore
 !.gitmodules
-!site-lisp
-!site-lisp/*
-!site-lisp/**/*
+

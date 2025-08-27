@@ -1,6 +1,7 @@
 (add-to-list 'load-path (expand-file-name "codes" emacs-config-path))
-(require 'lang-hooks-config)
-(require 'treesit-config)
+(require 'config-lang-hooks)
+(require 'config-treesit)
+(require 'config-snippets)
 (require 'lang-lisp)
 (use-package treemacs
   :ensure t
@@ -33,13 +34,14 @@
   (projectile-mode-line "Projectile")
   (projectile-track-known-projects-automatically t)
   (projectile-git-submodule-command nil)
+  (projectile-cleanup-known-projects t)
   :hook
   (prog-mode . projectile-mode)
   :bind
   ("C-c p" . projectile-hydra/body)
   :hydra
   (projectile-hydra (:color blue :hint nil)
-"
+		    "
 ^Projectile((x+) 4 : other window (x+) 5 : other frame)
 ^Find File^                         ^Buffer in Project^  ^Project Process^   ^Other
 ^^^^------------------------------------------------------------------------------------------------------
@@ -105,6 +107,6 @@ _e_: recent                         ^ ^                  _L_: install        _o_
   :init (counsel-projectile-mode))
 
 (if (eq system-type 'gnu/linux)
-    (require 'prog-linux)
-  (require 'prog-win))
+    (require 'linux-codes)
+  (require 'win-codes))
 (provide 'init-codes)

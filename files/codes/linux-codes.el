@@ -1,10 +1,4 @@
-(require 'lang-hooks-config)
-(use-package yasnippet
-  :ensure t
-  :diminish yas-minor-mode
-  :after markdown-mode
-  :init
-  (yas-global-mode 1))
+(require 'config-lang-hooks)
 (use-package lsp-bridge
   :load-path "site-lisp/lsp-bridge"
   :diminish lsp-bridge-mode
@@ -57,4 +51,4 @@ _i_,_I_: Find Implication       _l_: List Diagnoses
   (setq dape-inlay-hints t)
   (setq dape-cwd-fn 'projectile-project-root)
   )
-(provide 'prog-linux)
+(provide 'linux-codes)

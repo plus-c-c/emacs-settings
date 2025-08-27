@@ -40,8 +40,8 @@
        )
 
 (use-package eaf-interleave
-  :init
-  (require 'org-roam)
+  :after (org-roam eaf)
+  :defer 0.5
   :custom
   (eaf-interleave-org-notes-dir-list (cons interleave-path nil))
   (eaf-interleave-split-direction 'vertical)

@@ -499,14 +499,14 @@ to latex."
         (or force-enable (not oxlc/ox-latex-chinese-enable)))
   (if oxlc/ox-latex-chinese-enable
       (progn
-        (message (concat "ox-latex-chinese is enabled, force *override*："
-                         (mapconcat #'symbol-name oxlc/overrided-variables ", ")
-                         "."))
+        ;(message (concat "ox-latex-chinese is enabled, force *override*："
+        ;                 (mapconcat #'symbol-name oxlc/overrided-variables ", ")
+        ;                 "."))
         (advice-add 'org-export-as :around #'oxlc/org-export-as)
         (advice-add 'org-create-formula-image-with-imagemagick
                     :around #'oxlc/org-create-formula-image-with-imagemagick)
         (advice-add 'org-latex-compile :around #'oxlc/org-latex-compile))
-    (message "ox-latex-chinese is disabled.")
+    ;(message "ox-latex-chinese is disabled.")
     (advice-remove 'org-export-as #'oxlc/org-export-as)
     (advice-remove 'org-create-formula-image-with-imagemagick
                    #'oxlc/org-create-formula-image-with-imagemagick)

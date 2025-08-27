@@ -1,6 +1,6 @@
 (provide 'external-device-methods)
 
-(defun get-file-auto-create (env file)
+(defun expand-file-name-auto-create (file env)
   "Get file directory and create a new empty file if it does not exist."
        (let ((complete-dir (expand-file-name file env)))
 	 (progn
@@ -10,13 +10,13 @@
 	   )
 	 ))
 
-(defun get-directory-auto-create (env dir)
+(defun expand-directory-name-auto-create (dir env)
   "Get directory and create a new empty directory if it does not exist."
        (let ((complete-dir (expand-file-name dir env)))
 	 (progn
 	   (unless (file-exists-p complete-dir)
 	     (make-directory complete-dir))
-	   complete-dir
+	   (concat complete-dir "/")
 	   )
 	 ))
 
@@ -50,7 +50,7 @@
 
 (defun external-device-names ()
   "Get names of external devices."
-  (if (directory-name-p (expand-file-name (user-login-name) "/run/media"))
+  (if (file-exists-p (concat (expand-file-name (user-login-name) "/run/media") "/"))
       (cddr (directory-files (expand-file-name (user-login-name) "/run/media")))
     nil
       )

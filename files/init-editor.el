@@ -1,5 +1,6 @@
 (add-to-list 'load-path (expand-file-name "edit" emacs-config-path))
 (use-package ivy :ensure t
+  :defer 0.8
   :hook (after-init .ivy-mode)
   :custom
   (ivy-use-virtual-buffers t)
@@ -17,12 +18,16 @@
    ("C-x C-SPC" . counsel-mark-ring)
    :map minibuffer-local-map
    ("C-r" . counsel-minibuffer-history)))
-(use-package swiper :ensure t)
+(use-package swiper :ensure t
+  :defer 1.0)
 (use-package counsel
   :ensure t
+  :defer 0.8
   :diminish counsel-mode
   :hook (after-init . counsel-mode))
-(use-package ivy-hydra :ensure t)
+(use-package ivy-hydra :ensure t
+  :after ivy
+  :defer 0.8)
 ;; better M-x
 (use-package amx :ensure t :init (amx-mode) :diminish amx-mode)
 ;;better C-a and C-e
@@ -32,14 +37,14 @@
   (prog-mode . highlight-parentheses-mode)
   :custom
   (highlight-parentheses-colors '("IndianRed1" "orange" "gold" "lawn green" "cyan" "deep sky blue" "orchid")))
-(use-package mwim :ensure t :defer 0.5
+(use-package mwim :ensure t :defer 0.8
   :bind
   ("C-a" . mwim-beginning-of-code-or-line)
   ("C-e" . mwim-end-of-code-or-line))
 ;;better C-x u
 (use-package vundo :ensure t)
 ;;move or copy the whole line or region
-(use-package move-dup :ensure t :defer 0.5
+(use-package move-dup :ensure t :defer 0.8
   :hook (after-init . global-move-dup-mode)
   :diminish move-dup-mode
   :bind (("M-P"   . move-dup-move-lines-up)
@@ -47,6 +52,6 @@
 	 ("M-N"   . move-dup-move-lines-down)
 	 ("C-M-N" . move-dup-duplicate-down)))
 (if (eq system-type 'gnu/linux)
-    (require 'edit-linux)
-  (require 'edit-win))
+    (require 'linux-editor)
+  (require 'win-editor))
 (provide 'init-editor)

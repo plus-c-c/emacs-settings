@@ -22,4 +22,4 @@
   :config
   (auto-save-enable)
   )
-(provide 'edit-linux)
+(provide 'linux-editor)

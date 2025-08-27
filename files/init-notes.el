@@ -1,24 +1,72 @@
 (add-to-list 'load-path (expand-file-name "notes" emacs-config-path))
 
-(defcustom note-directory (get-directory-auto-create "" (if (eq system-type 'gnu/linux) "~/Documents/emacs/" "D:/emacs/")) "The directory of my notes.")
-(defcustom bibliography-directory (get-directory-auto-create note-directory "bibliography") "The directory of bibliography.")
-(defcustom interleave-path (get-directory-auto-create bibliography-directory "interleave") "The directory of interleave")
+(defcustom note-directory
+  (expand-directory-name-auto-create
+   ""
+   (if (eq system-type 'gnu/linux)
+       "~/Documents/emacs/"
+     "D:/emacs/"))
+  "The directory of my notes.")
+(defcustom bibliography-directory
+  (expand-directory-name-auto-create
+   "bibliography"
+   note-directory)
+  "The directory of bibliography.")
+(defcustom interleave-path
+  (expand-directory-name-auto-create
+   "interleave"
+   bibliography-directory)
+  "The directory of interleave")
 
+(add-hook 'after-init-hook
+	  (lambda () (add-to-list 'safe-local-variable-values '(eval add-hook 'after-save-hook 'org-mobile-push nil t))))
 (use-package org
-  :hook
-  (org-mode . toggle-truncate-lines)
+  :defer 0.5
+  ;:hook
+  ;(org-mode . (lambda () (toggle-truncate-lines 1)))
+  :custom
+  (org-directory (expand-directory-name-auto-create
+		  "org-notes"
+		  note-directory))
   )
-(require 'init-ref)
-(require 'init-roam)
+(use-package init-mobile
+  :after org)
+(use-package init-agenda
+  :after org
+  :hydra
+  (org-agenda-hydra (:color blue :hint nil)
+		    "
+Agenda Options:
+_a_: Open Agenda view
+_s_: Insert Schedule (C-c C-s)
+_d_: Insert Deadline (C-c C-d)
+_t_: Insert Todo (C-c C-t)
+_,_: Insert Priority (C-c C-,)
+"
+		    ("a" org-agenda)
+		    ("s" org-schedule)
+		    ("d" org-deadline)
+		    ("t" org-todo)
+		    ("," org-priority)
+		    )
+ ; :bind
+ ; ("C-c a" . org-agenda)
+ ; :bind
+ ; (:map org-mode-map
+;	("C-c C-a" . org-agenda-hydra/body))
+  :config
+  (global-set-key (kbd "C-c a") 'org-agenda)
+  (define-key org-mode-map (kbd "C-c a") 'org-agenda-hydra/body)
+  )
+(use-package init-ref
+  :defer 0.5
+  :after org)
+(use-package init-roam
+  :defer 0.5
+  :after org)
 (require 'org-export-lisp)
 (if (eq system-type 'gnu/linux)
-    (progn (require 'interleave-linux)
-	   (defun eaf-org-open-file (file &optional link) "An wrapper function on eaf=open."
-		  (eaf-open file))
-	   (add-to-list 'org-file-apps '("\\.pdf\\'" . eaf-org-open-file))
-	   (add-to-list 'org-file-apps '("\\.x?html?\\'" . eaf-org-open-file))
-	   )
-  (progn (add-to-list 'org-file-apps '("\\.pdf\\'" . emacs))
-	 (add-to-list 'org-file-apps '("\\.x?html?\\'" . emacs)))
+    (use-package notes-linux :after org)
+  (use-package notes-win :after org)
   )
 (provide 'init-notes)
