@@ -15,28 +15,28 @@
   (dashboard-navigator-buttons
       `(;; line1
         (
-	 (,(all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0)
+	 (,(all-the-icons-octicon "mark-github" :height 1.0 :v-adjust 0.0)
           "Github"
           "Browse Github"
           (lambda (&rest _) (browse-url "github.com")))
-	 (,(all-the-icons-material "search" :height 1.1 :v-adjust -0.25)
+	 (,(all-the-icons-material "search" :height 1.2 :v-adjust -0.25)
           "Search"
           "Browse Search engine"
           (lambda (&rest _) (browse-url "duckduckgo.com")))
 	 )
 
 	(
-	 (,(all-the-icons-faicon "database" :height 1.1 :v-adjust -0.1)
+	 (,(all-the-icons-faicon "database" :height 1.0 :v-adjust -0.1)
           "Ebib"
           "Open Ebib"
           (lambda (&rest _) (ebib))
 	  warning)
-	 (,(all-the-icons-faicon "calendar" :height 1.1 :v-adjust -0.1)
+	 (,(all-the-icons-faicon "calendar" :height 1.0 :v-adjust -0.1)
           "Agenda"
           "Open Agenda"
           (lambda (&rest _) (projectile-switch-project-by-name org-agenda-directory))
 	  warning)
-	 (,(all-the-icons-material "bubble_chart" :height 1.1 :v-adjust -0.2)
+	 (,(all-the-icons-material "bubble_chart" :height 1.2 :v-adjust -0.25)
 	  "ORUI"
 	  "Show org-roam-ui page"
 	  (lambda (&rest _) (org-roam-ui-open))

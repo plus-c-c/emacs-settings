@@ -22,4 +22,5 @@
   :mode (("\\.jsx\\'" . jtsx-js-mode)
 	 ("\\.tsx\\'" . jtsx-tsx-mode))
   :defer t)
+(diminish 'eldoc-mode)
 (provide 'lang-lisp)

@@ -32,7 +32,13 @@
     nil
   (org-mobile-write-orgzlyignore))
 
-(org-mobile-pull)
 (add-hook 'dashboard-after-initialize-hook 'org-mobile-push)
+(add-hook 'dashboard-before-initialize-hook (lambda ()
+					      (org-mobile-pull)
+					      (org-agenda-list)
+					      (org-agenda-exit)))
+
+
+
 
 (provide 'init-mobile)
