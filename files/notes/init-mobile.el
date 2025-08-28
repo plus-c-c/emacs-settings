@@ -32,11 +32,16 @@
     nil
   (org-mobile-write-orgzlyignore))
 
+(defun org-agenda-reload ()
+  "Reload org-agenda to avoid error \"Selecting deleted buffer.\""
+  (org-agenda-list)
+  (org-agenda-exit)
+  )
 (add-hook 'dashboard-after-initialize-hook 'org-mobile-push)
 (add-hook 'dashboard-before-initialize-hook (lambda ()
 					      (org-mobile-pull)
-					      (org-agenda-list)
-					      (org-agenda-exit)))
+					      (org-agenda-reload)
+					      ))
 
 
 
