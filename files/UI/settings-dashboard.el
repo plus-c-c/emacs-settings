@@ -45,7 +45,7 @@
   (dashboard-projects-backend 'projectile)
   (dashboard-icon-type 'all-the-icons)
   (dashboard-items '((recents . 5)
-		     (projects . 3)
+		     (projects . 10)
 		     (bookmarks . 3)
 		     (agenda . 10)))
   :bind
