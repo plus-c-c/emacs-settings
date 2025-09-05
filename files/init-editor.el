@@ -51,6 +51,7 @@
 	 ("C-M-P" . move-dup-duplicate-up)
 	 ("M-N"   . move-dup-move-lines-down)
 	 ("C-M-N" . move-dup-duplicate-down)))
+(require 'config-ellama)
 (if (eq system-type 'gnu/linux)
     (require 'linux-editor)
   (require 'win-editor))
