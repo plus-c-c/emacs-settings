@@ -4,7 +4,10 @@
   :custom
   (eaf-find-alternate-file-in-dired t))
 
-(use-package eaf-git :after eaf)
+(use-package eaf-git :after eaf
+  :bind
+  (:map prog-mode-map
+	("C-x g" . eaf-open-git)))
 
 (use-package eaf-browser :after eaf
   :custom
