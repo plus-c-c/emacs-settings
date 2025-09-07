@@ -32,7 +32,7 @@
 (use-package init-mobile
   :after org)
 (use-package init-agenda
-  :after org
+  :after (org projectile)
   :hydra
   (org-agenda-hydra (:color blue :hint nil)
 		    "

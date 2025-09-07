@@ -41,7 +41,32 @@
 	  "Show org-roam-ui page"
 	  (lambda (&rest _) (org-roam-ui-open))
 	  warning)
-	)))
+	)
+	(
+	 (,(all-the-icons-fileicon "netlogo" :height 1.0 :v-adjust 0.0)
+          "Scopus"
+          "Open Scopus"
+          (lambda (&rest _) (browse-web "scopus.com"))
+	  link)
+	 (,(all-the-icons-fileicon "netlogo" :height 1.0 :v-adjust 0.0)
+          "WOS"
+          "Open WOS"
+          (lambda (&rest _) (browse-web "webofscience.com"))
+	  link)
+	 (,(all-the-icons-fileicon "netlogo" :height 1.0 :v-adjust 0.0)
+          "PubMed"
+          "Open PubMed"
+          (lambda (&rest _) (browse-web "https://pubmed.ncbi.nlm.nih.gov/"))
+	  link)
+	 )
+	(
+	 (,(all-the-icons-fileicon "brain" :height 1.0 :v-adjust 0.0)
+          "AI"
+          "Open ellama"
+          (lambda (&rest _) (ellama))
+	  success)
+	)
+	))
   (dashboard-projects-backend 'projectile)
   (dashboard-icon-type 'all-the-icons)
   (dashboard-items '((recents . 5)
