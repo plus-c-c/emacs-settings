@@ -4,7 +4,8 @@
 !files
 !files/*
 !files/**/*
-
+!site-lisp
+!site-lisp/*
 !.gitignore
 !.gitmodules
 
