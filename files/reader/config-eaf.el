@@ -39,10 +39,12 @@
   )
 
 (use-package eaf-pyqterminal :after eaf
-  :custom
+  :config
   (if (eq system-type 'gnu/linux)
-      (eaf-pyqterminal-font-family "CaskaydiaCove Nerd Font Mono")
-    (eaf-pyqterminal-font-family "Consolas"))
+      (setq eaf-pyqterminal-font-family "CaskaydiaCove Nerd Font Mono")
+    (setq eaf-pyqterminal-font-family "Consolas")
+    )
+  :custom
   (eaf-pyqterminal-cursor-type "bar")
   (eaf-pyqterminal-font-size 32))
 
