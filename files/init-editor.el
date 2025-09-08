@@ -65,7 +65,7 @@
   :config
   (auto-save-enable)
   )
-(if (eq system-type 'gnu/linux)
-    (require 'linux-editor)
-  (require 'win-editor))
+(if (eq system-type 'windows-nt)
+    (require 'pasteex-mode)
+  nil)
 (provide 'init-editor)
