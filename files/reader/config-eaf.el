@@ -42,7 +42,7 @@
   :custom
   (if (eq system-type 'gnu/linux)
       (eaf-pyqterminal-font-family "CaskaydiaCove Nerd Font Mono")
-    nil)
+    (eaf-pyqterminal-font-family "Consolas"))
   (eaf-pyqterminal-cursor-type "bar")
   (eaf-pyqterminal-font-size 32))
 

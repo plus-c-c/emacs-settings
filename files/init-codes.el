@@ -28,9 +28,6 @@
 		 ("M-t" treemacs-find-tag "Find Tag"))
  )
 
-(use-package config-projectile)
-
-(if (eq system-type 'gnu/linux)
-    (require 'linux-codes)
-  (require 'win-codes))
+(require 'config-projectile)
+(require 'config-protocol)
 (provide 'init-codes)

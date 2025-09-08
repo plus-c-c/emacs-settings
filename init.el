@@ -4,7 +4,7 @@
 (require 'init-UI)
 (require 'init-file)
 (require 'init-reader)
-(require 'init-editor)
+(require 'init-edit)
 (require 'init-notes)
 (require 'init-codes)
 (provide 'init)

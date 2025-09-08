@@ -1,5 +1,3 @@
-(use-package linux-settings-dashboard :after dashboard)
-
 (require 'subr-x) ;; cl-loop来自这里
 (defvar cabins--fonts-default '("SauceCodePro Nerd Font" "Cascadia Code PL" "Menlo" "Consolas"))
 (defvar cabins--fonts-unicode '("Segoe UI Symbol" "Symbola" "Symbol"))

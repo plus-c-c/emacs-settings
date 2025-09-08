@@ -68,4 +68,4 @@
 (if (eq system-type 'windows-nt)
     (require 'pasteex-mode)
   nil)
-(provide 'init-editor)
+(provide 'init-edit)

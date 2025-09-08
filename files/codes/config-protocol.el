@@ -51,4 +51,4 @@ _i_,_I_: Find Implication       _l_: List Diagnoses
   (setq dape-inlay-hints t)
   (setq dape-cwd-fn 'projectile-project-root)
   )
-(provide 'linux-codes)
+(provide 'config-protocol)
