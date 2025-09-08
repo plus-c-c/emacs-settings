@@ -1,10 +1,13 @@
 (add-to-list 'load-path (expand-file-name "site-lisp/emacs-application-framework" user-emacs-directory))
 
+(global-set-key (kbd "C-c w") 'browse-web)
+
 (use-package eaf :diminish eaf-mode
   :custom
   (eaf-find-alternate-file-in-dired t))
 
-(use-package eaf-git :after eaf)
+(use-package eaf-git :after eaf
+  :bind ("C-x g" . eaf-open-git))
 
 (use-package eaf-browser :after eaf
   :custom
@@ -23,8 +26,11 @@
   (eaf-webengine-font-family "WenQuanYi Micro Hei Mono")
   (eaf-browser-extension-liste
    '("html" "htm"))
-  (eaf-browser-auto-import-chrome-cookies t)
   :config
+  (if (eq system-type 'gnu/linux)
+      (setq eaf-browser-auto-import-chrome-cookies t)
+    nil
+    )
   (defalias 'browse-web #'eaf-open-browser)
   )
 
@@ -34,9 +40,11 @@
 
 (use-package eaf-pyqterminal :after eaf
   :custom
-  (eaf-pyqterminal-font-family "CaskaydiaCove Nerd Font Mono")
+  (if (eq system-type 'gnu/linux)
+      (eaf-pyqterminal-font-family "CaskaydiaCove Nerd Font Mono")
+    nil)
+  (eaf-pyqterminal-cursor-type "bar")
   (eaf-pyqterminal-font-size 32))
 
 (use-package eaf-all-the-icons  :after all-the-icons)
-
-(provide 'linux-reader)
+(provide 'config-eaf)

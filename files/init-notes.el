@@ -17,9 +17,7 @@
    "interleave"
    bibliography-directory)
   "The directory of interleave")
-
-(add-hook 'after-init-hook
-	  (lambda () (add-to-list 'safe-local-variable-values '(eval add-hook 'after-save-hook 'org-mobile-push nil t))))
+(add-to-list 'safe-local-variable-values '(eval add-hook 'after-save-hook 'org-mobile-push nil t))
 (use-package org
   :defer 0.5
   ;:hook
@@ -29,6 +27,8 @@
 		  "org-notes"
 		  note-directory))
   )
+
+(require 'org-export-lisp)
 (use-package init-mobile
   :after org)
 (use-package init-agenda
@@ -64,7 +64,6 @@ _,_: Insert Priority (C-c C-,)
 (use-package init-roam
   :defer 0.5
   :after org)
-(require 'org-export-lisp)
 (if (eq system-type 'gnu/linux)
     (use-package linux-notes :after org)
   (use-package win-notes :after org)

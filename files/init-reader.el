@@ -1,6 +1,3 @@
 (add-to-list 'load-path (expand-file-name "reader" emacs-config-path))
-(global-set-key (kbd "C-c w") 'browse-web)
-(if (eq system-type 'gnu/linux)
-    (require 'linux-reader)
-  (require 'win-reader))
+(require 'config-eaf)
 (provide 'init-reader)

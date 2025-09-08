@@ -1,3 +1,6 @@
+;; Local Variables:
+;; coding: utf-8-unix
+;; End:
 ;;; ox-latex-chinese.el --- An example org latex exporter configure for Chinese users
 
 ;; * Header

@@ -15,6 +15,7 @@
 (use-package projectile
   :ensure t
   :custom
+  (projectile-indexing-method 'hybrid)
   (projectile-mode-line "Projectile")
   (projectile-track-known-projects-automatically t)
   (projectile-git-submodule-command nil)
@@ -89,5 +90,5 @@ _e_: recent                         ^ ^                  _L_: install        _o_
 (use-package counsel-projectile
   :ensure t
   :after (projectile)
-  :init (counsel-projectile-mode))
+  :config (counsel-projectile-mode))
 (provide 'config-projectile)

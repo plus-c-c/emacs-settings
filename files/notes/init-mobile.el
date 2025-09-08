@@ -2,9 +2,10 @@
 
 (if (eq system-type 'gnu/linux)
     (setq org-mobile-directory (expand-directory-name-auto-create "mobile/org" "/cloud/webdav"))
-  (setq org-mobile-directory (expand-directory-name-auto-create "mobile/org" "D:/emacs"))
+  (setq org-mobile-directory  "z:/mobile/org")
   )
-
+(if (eq system-type 'windows-nt)
+    (setq org-mobile-checksum-binary "z:/mobile/shasum.ps1") nil)
 (setq org-agenda-mobile-directory
       (expand-directory-name-auto-create
        "agenda"
@@ -23,7 +24,7 @@
 	(files '("index.org" "agendas.org"))
 	entry file)
     (with-temp-file sumfile
-      (set-buffer-file-coding-system 'undecided-unix nil)
+      (set-buffer-file-coding-system 'utf-8-unix nil)
       (while (setq entry (pop files))
 	(setq file entry)
 	(insert (format "%s\n" file))))))
