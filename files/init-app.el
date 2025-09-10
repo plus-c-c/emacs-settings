@@ -1,0 +1,5 @@
+(add-to-list 'load-path (expand-file-name "app" emacs-config-path))
+(require 'config-eaf)
+(require 'config-terminal)
+(require 'config-git)
+(provide 'init-app)
