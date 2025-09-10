@@ -1,8 +1,8 @@
 (add-to-list 'load-path (expand-file-name "codes" emacs-config-path))
 (require 'config-lang-hooks)
+(require 'config-lang-modes)
 (require 'config-treesit)
 (require 'config-snippets)
-(require 'lang-lisp)
 (use-package treemacs
   :ensure t
   :defer t

@@ -75,6 +75,4 @@
 			("n" eaf-interleave-sync-next-note "Sync Next Note(M-n)"))
   )
 
-
-
-(provide 'linux-interleave)
+(provide 'config-interleave)

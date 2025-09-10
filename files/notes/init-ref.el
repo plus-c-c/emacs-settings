@@ -6,14 +6,7 @@
   :defer 0.8
   :after (bibtex-completion ivy)
   :init
-  (setq bibtex-completion-bibliography
-	(mapcar (lambda (file) (expand-file-name-auto-create file bibliography-directory))
-		'("references.bib"
-		  "dei.bib"
-		  "master.bib"
-		  "archive.bib")
-		)
-	bibtex-completion-library-path
+  (setq bibtex-completion-library-path
 	(mapcar (lambda (dir) (expand-directory-name-auto-create dir bibliography-directory))
 		'("bibtex-pdfs")
 		)
@@ -83,15 +76,14 @@
 		    ("uu" ebib-browse-url)
 		    ("ud" ebib-browse-doi)
 		    ("p" ebib-view-file)
-		    ("n" (if (eq system-type 'gnu/linux)
-			     (prog1
-				 (ebib-view-file)
-			       (eaf-interleave-open-notes-file-auto-create)
-			       )
-			   (ebib-open-note))
-		     )
+		    ("n" (lambda (file)
+			   (interactive)
+			   (ebib-view-file file)
+			   (eaf-interleave-open-notes-file-auto-create)
+			   ))
 
 		    ("f" ebib-filters-hydra/body))
+
   (ebib-filters-hydra (:color blue :hint nil)
 		      "
 | ^^^^File        | ^^Operator |

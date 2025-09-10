@@ -26,6 +26,11 @@
   (org-directory (expand-directory-name-auto-create
 		  "org-notes"
 		  note-directory))
+  :config
+  (defun eaf-org-open-file (file &optional link) "An wrapper function on eaf-(or )pen."
+	 (eaf-open file))
+  (add-to-list 'org-file-apps '("\\.pdf\\'" . eaf-org-open-file))
+  (add-to-list 'org-file-apps '("\\.x?html?\\'" . eaf-org-open-file))
   )
 
 (require 'org-export-lisp)
@@ -64,8 +69,5 @@ _,_: Insert Priority (C-c C-,)
 (use-package init-roam
   :defer 0.5
   :after org)
-(if (eq system-type 'gnu/linux)
-    (use-package linux-notes :after org)
-  (use-package win-notes :after org)
-  )
+(require 'config-interleave)
 (provide 'init-notes)

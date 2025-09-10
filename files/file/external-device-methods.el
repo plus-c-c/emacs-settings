@@ -92,3 +92,4 @@
   (expand-file-name x (expand-file-name (user-login-name) "/run/media"))
   (concat x ":/")
   ))
+

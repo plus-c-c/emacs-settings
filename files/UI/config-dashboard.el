@@ -1,5 +1,7 @@
 (use-package dashboard :ensure t :after (all-the-icons projectile)
   :init
+  (require 'config-theme)
+  (load-theme 'dracula t)
   (dashboard-setup-startup-hook)
   :custom
   (dashboard-startup-banner 'logo)
@@ -124,4 +126,4 @@
   (add-to-list 'dashboard-item-shortcuts '(external-devices . "d"))
   )
   )
-(provide 'settings-dashboard)
+(provide 'config-dashboard)

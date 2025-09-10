@@ -17,4 +17,4 @@
   (popper-mode +1)
   (popper-echo-mode +1))
 
-(provide 'settings-buffer)
+(provide 'config-buffer)

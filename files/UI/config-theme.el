@@ -14,4 +14,4 @@
   (org-capture-mode . org-superstar-mode))
 (add-to-list 'load-path (expand-file-name "UI/faces" emacs-config-path))
 (use-package face-hydra :after hydra)
-(provide 'settings-theme)
+(provide 'config-theme)
