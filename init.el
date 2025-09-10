@@ -3,7 +3,7 @@
 (require 'init-packages)
 (require 'init-UI)
 (require 'init-file)
-(require 'init-reader)
+(require 'init-app)
 (require 'init-edit)
 (require 'init-notes)
 (require 'init-codes)
