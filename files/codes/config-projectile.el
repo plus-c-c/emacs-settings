@@ -15,10 +15,11 @@
 (use-package projectile
   :ensure t
   :custom
-  (projectile-indexing-method 'hybrid)
+  (projectile-indexing-method 'alien)
+  (projectile-git-submodule-command nil)
+  (projectile-git-use-fd nil)
   (projectile-mode-line "Projectile")
   (projectile-track-known-projects-automatically t)
-  (projectile-git-submodule-command nil)
   (projectile-cleanup-known-projects t)
   (projectile-ignored-project-function 'projectile-ignore-path-function)
   :hook
