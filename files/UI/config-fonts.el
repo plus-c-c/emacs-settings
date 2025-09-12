@@ -5,7 +5,7 @@
 	(shell-command "./fonts.ps1")
       (all-the-icons-install-fonts t)))
 (require 'subr-x) ;; cl-loop来自这里
-(defvar cabins--fonts-default '("Source Code Pro-32" "Cascadia Code PL"  "Menlo" "Consolas"))
+(defvar cabins--fonts-default '("Source Code Pro" "Cascadia Code PL"  "Menlo" "Consolas"))
 (defvar cabins--fonts-unicode '("Segoe UI Symbol" "Symbola" "Symbol"))
 (defvar cabins--fonts-emoji '("Noto Color Emoji" "Apple Color Emoji"))
 (defvar cabins--fonts-cjk '("WenQuanYi Micro Hei" "Microsoft Yahei"))
