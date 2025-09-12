@@ -1,6 +1,6 @@
 [submodule "site-lisp/emacs-application-framework"]
 	   path = site-lisp/emacs-application-framework
-	   url = https://github.com/emacs-eaf/emacs-application-framework
+	   url = https://github.com/plus-c-c/emacs-application-framework
 [submodule "site-lisp/fingertip"]
 	   path = site-lisp/fingertip
 	   url = https://github.com/manateelazycat/fingertip
