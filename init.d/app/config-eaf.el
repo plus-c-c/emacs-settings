@@ -4,7 +4,12 @@
 
 (use-package eaf :diminish eaf-mode
   :custom
-  (eaf-find-alternate-file-in-dired t))
+  (eaf-find-alternate-file-in-dired t)
+  :init
+  (if (string-equal (shell-command-to-string "echo $XDG_CURRENT_DESKTOP") "Hyprland\n")
+      (setq eaf-wm-name "wlroots wm"
+	    eaf-is-member-of-focus-fix-wms t))
+  )
 
 ;(use-package eaf-git :after eaf
 ;  :bind ("C-x g" . eaf-open-git))

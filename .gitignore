@@ -1,9 +1,9 @@
 *
 !init.el
 !early-init.el
-!files
-!files/*
-!files/**/*
+!init.d
+!init.d/*
+!init.d/**/*
 !site-lisp
 !site-lisp/*
 !site-lisp/**/*

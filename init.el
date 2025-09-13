@@ -1,4 +1,4 @@
-(defvar emacs-config-path (expand-file-name "files" user-emacs-directory))
+(defvar emacs-config-path (expand-file-name "init.d" user-emacs-directory))
 (add-to-list 'load-path emacs-config-path)
 (require 'init-packages)
 (require 'init-UI)

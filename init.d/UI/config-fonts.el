@@ -5,7 +5,7 @@
 	(shell-command "./fonts.ps1")
       (all-the-icons-install-fonts t)))
 (require 'subr-x) ;; cl-loop来自这里
-(defvar cabins--fonts-default '("Source Code Pro" "Cascadia Code PL"  "Menlo" "Consolas"))
+(defvar cabins--fonts-default '("SauceCodePro Nerd Font" "Cascadia Code PL"  "Menlo" "Consolas"))
 (defvar cabins--fonts-unicode '("Segoe UI Symbol" "Symbola" "Symbol"))
 (defvar cabins--fonts-emoji '("Noto Color Emoji" "Apple Color Emoji"))
 (defvar cabins--fonts-cjk '("WenQuanYi Micro Hei" "Microsoft Yahei"))
@@ -23,7 +23,9 @@
 		    )))
 (cond ((eq system-type 'gnu/linux)
     (if (string-equal (shell-command-to-string "echo $XDG_CURRENT_DESKTOP") "Hyprland\n")
-	(global-text-scale-adjust 20)))
+	(global-text-scale-adjust 20)
+      nil
+      ))
   ((memq system-type '(windows-nt ms-dos cygwin))
    (global-text-scale-adjust 20))
   )
