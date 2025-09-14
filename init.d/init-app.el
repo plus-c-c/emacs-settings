@@ -1,5 +1,7 @@
 (add-to-list 'load-path (expand-file-name "app" emacs-config-path))
+(require 'config-convertor)
 (require 'config-eaf)
 (require 'config-terminal)
 (require 'config-git)
+;(require 'config-zotero)
 (provide 'init-app)

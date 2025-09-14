@@ -5,6 +5,7 @@
 (use-package eaf :diminish eaf-mode
   :custom
   (eaf-find-alternate-file-in-dired t)
+  (eaf-webengine-download-path "~/Downloads")
   :init
   (if (string-equal (shell-command-to-string "echo $XDG_CURRENT_DESKTOP") "Hyprland\n")
       (setq eaf-wm-name "wlroots wm"

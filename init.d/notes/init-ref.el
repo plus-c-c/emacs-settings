@@ -5,33 +5,67 @@
   :ensure t
   :defer 0.8
   :after (bibtex-completion ivy)
-  :init
-  (setq bibtex-completion-library-path
-	(mapcar (lambda (dir) (expand-directory-name-auto-create dir bibliography-directory))
-		'("bibtex-pdfs")
-		)
-	bibtex-completion-notes-path interleave-path
-	bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
-
-	bibtex-completion-additional-search-fields '(keywords)
-	bibtex-completion-display-formats
-	'((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
-	  (inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
-	  (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
-	  (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
-	  (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
-	bibtex-completion-pdf-open-function
-	(lambda (fpath)
-	  (call-process "open" nil 0 nil fpath))))
+  :custom
+  (bibtex-completion-pdf-field "File")
+  (bibtex-completion-library-path
+   (mapcar (lambda (dir) (expand-directory-name-auto-create dir bibliography-directory))
+	   '("bibtex-pdfs")))
+  (bibtex-completion-notes-path interleave-path)
+  (bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n")
+  (bibtex-completion-pdf-open-function 'eaf-open)
+  (bibtex-completion-additional-search-fields '(keywords))
+  (bibtex-completion-display-formats
+   '((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
+     (inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
+     (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+     (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+     (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}")))
+  )
 
 (use-package ebib
   :ensure t
   :defer 0.8
   :after org-ref
+  :config
+  (defcustom ebib-database-path
+    (expand-directory-name-auto-create "database" bibliography-directory)
+    "The place where ebib read bibTeX files.")
+  (defun ebib-merge-bibtex-file-from-download ()
+    "Merge a BibTeX file into the current database."
+    (interactive)
+    (progn
+      (cd eaf-webengine-download-path)
+      (ebib--execute-when
+	((or dependent-db filtered-db) (error "[Ebib] Cannot merge into a filtered or a dependent database"))
+	(real-db
+	 (let ((file (expand-file-name (read-file-name "File to merge: ")))
+               (ebib--log-error nil))       ; We haven't found any errors yet.
+	   (if (not (file-readable-p file))
+               (error "[Ebib] No such file: %s" file)
+             (ebib--log 'log "Merging file `%s'" (ebib-db-get-filename ebib--cur-db))
+	     (let ((bib-file (convert-ris2bib file)))
+               (ebib--bib-read-entries bib-file ebib--cur-db 'ignore-modtime 'not-as-dependent)
+               (ebib--update-buffers)
+               (ebib--set-modified t ebib--cur-db)
+	       (unless (eq bib-file file)
+		 (delete-file bib-file))
+	       )
+	     (if (y-or-n-p "Merge complete. Delete source and save?")
+		 (progn (delete-file file)
+			(ebib-save-current-database nil)))
+	     )
+	   ))
+	)
+      )
+    )
+  (setq bibtex-completion-bibliography (directory-files ebib-database-path t "\\.bib\\'"))
+  :hook
+  (ebib-index-mode . (lambda () (cd ebib-database-path)))
   :bind
   ("C-c e" . ebib)
   (:map ebib-index-mode-map
-	("C-c r" . ebib-index-hydra/body))
+	("C-c r" . ebib-index-hydra/body)
+	("i" . ebib-merge-bibtex-file-from-download))
 ;  ("C-c r" . ebib-hydra/body)
 ;  (:map ebib-multiline-mode-map
 ;   ("C-c C-c" . ebib-quit-multiline-buffer-and-save)

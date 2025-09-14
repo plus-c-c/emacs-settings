@@ -44,4 +44,5 @@
       (prefer-coding-system 'utf-8)
       (setq locale-coding-system 'utf-8)
       ))
+(setq auto-save-default nil)
 (provide 'early-init)

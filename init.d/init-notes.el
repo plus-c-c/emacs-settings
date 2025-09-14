@@ -63,9 +63,7 @@ _,_: Insert Priority (C-c C-,)
   (global-set-key (kbd "C-c a") 'org-agenda)
   (define-key org-mode-map (kbd "C-c a") 'org-agenda-hydra/body)
   )
-(use-package init-ref
-  :defer 0.5
-  :after org)
+(use-package init-ref  :defer 0.5  :after org)
 (use-package init-roam
   :defer 0.5
   :after org)
