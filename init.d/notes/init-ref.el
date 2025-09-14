@@ -38,11 +38,11 @@
       (ebib--execute-when
 	((or dependent-db filtered-db) (error "[Ebib] Cannot merge into a filtered or a dependent database"))
 	(real-db
-	 (let ((file (expand-file-name (read-file-name "File to merge: ")))
+	 (let ((file (expand-file-name (read-file-name "Import to merge: ")))
                (ebib--log-error nil))       ; We haven't found any errors yet.
 	   (if (not (file-readable-p file))
                (error "[Ebib] No such file: %s" file)
-             (ebib--log 'log "Merging file `%s'" (ebib-db-get-filename ebib--cur-db))
+             (ebib--log 'log "Importing file `%s'" (ebib-db-get-filename ebib--cur-db))
 	     (let ((bib-file (convert-ris2bib file)))
                (ebib--bib-read-entries bib-file ebib--cur-db 'ignore-modtime 'not-as-dependent)
                (ebib--update-buffers)
@@ -50,7 +50,7 @@
 	       (unless (eq bib-file file)
 		 (delete-file bib-file))
 	       )
-	     (if (y-or-n-p "Merge complete. Delete source and save?")
+	     (if (y-or-n-p "Import complete. Delete source and save?")
 		 (progn (delete-file file)
 			(ebib-save-current-database nil))))
 	   )))
