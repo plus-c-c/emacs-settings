@@ -3,4 +3,5 @@
 (require 'config-fonts)
 (require 'config-buffer)
 (require 'config-dashboard)
+(require 'config-frame)
 (provide 'init-UI)

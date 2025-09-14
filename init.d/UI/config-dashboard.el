@@ -15,8 +15,15 @@
   (dashboard-page-separator "\f\n")
   (dashboard-center-content t)
   (dashboard-navigator-buttons
-      `(;; line1
-        (
+      `(
+	(;;line 1
+	 (,(all-the-icons-fileicon "brain" :height 1.0 :v-adjust 0.0)
+          "AI"
+          "Open ellama"
+          (lambda (&rest _) (ellama))
+	  success)
+	);;line 1 end
+        (;;line 2
 	 (,(all-the-icons-octicon "mark-github" :height 1.0 :v-adjust 0.0)
           "Github"
           "Browse Github"
@@ -25,9 +32,9 @@
           "Search"
           "Browse Search engine"
           (lambda (&rest _) (browse-url "duckduckgo.com")))
-	 )
+	 );;line 2 end
 
-	(
+	(;;line 3
 	 (,(all-the-icons-faicon "database" :height 1.0 :v-adjust -0.1)
           "Ebib"
           "Open Ebib"
@@ -43,8 +50,8 @@
 	  "Show org-roam-ui page"
 	  (lambda (&rest _) (org-roam-ui-open))
 	  warning)
-	)
-	(
+	);;line 3 end
+	(;;line 4
 	 (,(all-the-icons-fileicon "netlogo" :height 1.0 :v-adjust 0.0)
           "Scopus"
           "Open Scopus"
@@ -60,14 +67,29 @@
           "Open PubMed"
           (lambda (&rest _) (browse-web "https://pubmed.ncbi.nlm.nih.gov/"))
 	  link)
-	 )
-	(
-	 (,(all-the-icons-fileicon "brain" :height 1.0 :v-adjust 0.0)
-          "AI"
-          "Open ellama"
-          (lambda (&rest _) (ellama))
-	  success)
-	)
+	 );;line 4 end
+	(;;line 5
+	 (,(all-the-icons-fileicon "netlogo" :height 1.0 :v-adjust 0.0)
+          "NCBI"
+          "Open NCBI"
+          (lambda (&rest _) (browse-web "https://www.ncbi.nlm.nih.gov/#!/landingpage"))
+	  link)
+	 (,(all-the-icons-fileicon "netlogo" :height 1.0 :v-adjust 0.0)
+          "BLAST"
+          "Open BLAST"
+          (lambda (&rest _) (browse-web "https://www.ncbi.nlm.nih.gov/#!/landingpage"))
+	  link)
+	 (,(all-the-icons-fileicon "netlogo" :height 1.0 :v-adjust 0.0)
+          "UniProt"
+          "Open UniProt"
+          (lambda (&rest _) (browse-web "https://www.uniprot.org/"))
+	  link)
+	 (,(all-the-icons-fileicon "netlogo" :height 1.0 :v-adjust 0.0)
+          "EMBI"
+          "Open EMBI"
+          (lambda (&rest _) (browse-web "https://www.ebi.ac.uk/jdispatcher/"))
+	  link)
+	 );;line 5 end
 	))
   (dashboard-projects-backend 'projectile)
   (dashboard-icon-type 'all-the-icons)

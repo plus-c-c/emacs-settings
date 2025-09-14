@@ -2,8 +2,7 @@
 
 (if (eq system-type 'gnu/linux)
     (setq org-mobile-directory (expand-directory-name-auto-create "mobile/org" "/cloud/webdav"))
-  (setq org-mobile-directory  "z:/mobile/org")
-  )
+  (setq org-mobile-directory  "z:/mobile/org"))
 (if (eq system-type 'windows-nt)
     (setq org-mobile-checksum-binary "z:/mobile/shasum.ps1") nil)
 (setq org-agenda-mobile-directory
@@ -41,10 +40,5 @@
 (add-hook 'dashboard-after-initialize-hook 'org-mobile-push)
 (add-hook 'dashboard-before-initialize-hook (lambda ()
 					      (org-mobile-pull)
-					      (org-agenda-reload)
-					      ))
-
-
-
-
+					      (org-agenda-reload)))
 (provide 'init-mobile)

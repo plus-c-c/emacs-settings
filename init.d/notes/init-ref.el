@@ -183,7 +183,6 @@
   (require 'org-ref-isbn)
   (require 'org-ref-pubmed)
   (require 'org-ref-sci-id)
-
   :custom
   (bibtex-autokey-year-length 4)
   (bibtex-autokey-name-year-separator "-")
