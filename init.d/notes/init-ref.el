@@ -52,12 +52,10 @@
 	       )
 	     (if (y-or-n-p "Merge complete. Delete source and save?")
 		 (progn (delete-file file)
-			(ebib-save-current-database nil)))
-	     )
-	   ))
-	)
-      )
-    )
+			(ebib-save-current-database nil))))
+	   )))
+      (cd ebib-database-path)
+      ))
   (setq bibtex-completion-bibliography (directory-files ebib-database-path t "\\.bib\\'"))
   :hook
   (ebib-index-mode . (lambda () (cd ebib-database-path)))
@@ -65,7 +63,8 @@
   ("C-c e" . ebib)
   (:map ebib-index-mode-map
 	("C-c r" . ebib-index-hydra/body)
-	("i" . ebib-merge-bibtex-file-from-download))
+	("i" . ebib-merge-bibtex-file-from-download)
+	("I" . ebib-merge-bibtex-file))
 ;  ("C-c r" . ebib-hydra/body)
 ;  (:map ebib-multiline-mode-map
 ;   ("C-c C-c" . ebib-quit-multiline-buffer-and-save)
@@ -81,7 +80,7 @@
 | _r_,_R_: Reload        | _k_: Kill (Cut) | ^^                 | _=_: Default     | ^^               |
 |   ^^_o_: Open File     | _y_: Yank       | _m_: Mark one      | ^^               |  _p_: Open pdf   |
 |   ^^_i_: Import From   | _c_: Copy (Ce)  | _M_: Mark All/None | _f_: Filter Menu |  _n_: Open Note  |
-| ^^^^     (no Short)    | _e_: Edit       | ^^   (C-u m)       | ^^   (F)         | ^^               |
+|   ^^_I_: Merge From    | _e_: Edit       | ^^   (C-u m)       | ^^   (F)         | ^^               |
 "
 		    ("s" ebib-save-current-database)
 		    ("S" ebib-save-all-databases)
@@ -89,7 +88,8 @@
 		    ("r" ebib-reload-current-database)
 		    ("R" ebib-reload-all-databases)
 		    ("o" ebib-open-bibtex-file)
-		    ("i" ebib-merge-bibtex-file)
+		    ("i" ebib-merge-bibtex-file-from-download)
+		    ("I" ebib-merge-bibtex-file)
 
 		    ("a" ebib-add-entry)
 		    ("d" ebib-delete-entry)
