@@ -12,9 +12,6 @@
 	    eaf-is-member-of-focus-fix-wms t))
   )
 
-;(use-package eaf-git :after eaf
-;  :bind ("C-x g" . eaf-open-git))
-
 (use-package eaf-browser :after eaf
   :custom
   (eaf-proxy-port "7890")
@@ -30,7 +27,7 @@
   (eaf-webengine-fixed-font-size 20)
   (eaf-webengine-fixed-font-family "WenQuanyi Micro Hei Mono")
   (eaf-webengine-font-family "WenQuanYi Micro Hei Mono")
-  (eaf-browser-extension-liste
+  (eaf-browser-extension-list
    '("html" "htm"))
   :config
   (if (eq system-type 'gnu/linux)
@@ -44,15 +41,11 @@
   :custom (eaf-pdf-dark-mode nil)
   )
 
-(use-package eaf-pyqterminal :after eaf
-  :config
-  (if (eq system-type 'gnu/linux)
-      (setq eaf-pyqterminal-font-family "CaskaydiaCove Nerd Font Mono")
-    (setq eaf-pyqterminal-font-family "Consolas")
-    )
-  :custom
-  (eaf-pyqterminal-cursor-type "bar")
-  (eaf-pyqterminal-font-size 32))
-
 (use-package eaf-all-the-icons  :after all-the-icons)
+
+(if (eq system-type 'gnu/linux)
+    (use-package eaf-file-manager
+      :after eaf
+      :load-path "~/.emacs.d/site-lisp/emacs-application-framework"))
+
 (provide 'config-eaf)

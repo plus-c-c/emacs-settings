@@ -17,7 +17,8 @@
   (auto-package-update-delete-old-versions t)
   (auto-package-update-interval 4)
   :config
-  (auto-package-update-maybe))
+  (if (network-connected-p)
+      (auto-package-update-maybe)))
 (use-package hydra :ensure t)
 (use-package use-package-hydra :ensure t :after hydra)
 (use-package diminish :ensure t)

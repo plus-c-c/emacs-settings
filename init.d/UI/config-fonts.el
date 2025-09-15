@@ -21,13 +21,10 @@
 		    (when scale-factor (add-to-list 'face-font-rescale-alist
 						    `(,font . ,scale-factor)))
 		    )))
-(cond ((eq system-type 'gnu/linux)
-    (if (string-equal (shell-command-to-string "echo $XDG_CURRENT_DESKTOP") "Hyprland\n")
-	(global-text-scale-adjust 20)
-      nil
-      ))
+(cond
   ((memq system-type '(windows-nt ms-dos cygwin))
    (global-text-scale-adjust 20))
+  (t nil)
   )
 
 (defun cabins--font-setup (&optional default-fonts unicode-fonts emoji-fonts cjk-fonts)

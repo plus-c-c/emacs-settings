@@ -4,3 +4,6 @@
       (shell-command (concat "powershell Invoke-WebRequest -Uri " url " -OutFile " file))
     (shell-command (concat "curl " url " -o " file))
       ))
+(defun network-connected-p ()
+  "Check whether network is connected."
+  (string-equal (shell-command-to-string "nmcli -t -f STATE general") "connected\n"))

@@ -17,7 +17,7 @@
    "interleave"
    bibliography-directory)
   "The directory of interleave")
-(add-to-list 'safe-local-variable-values '(eval add-hook 'after-save-hook 'org-mobile-push nil t))
+(add-to-list 'safe-local-variable-values '(eval add-hook 'after-save-hook 'org-mobile-push-if-connected nil t))
 (use-package org
   :defer 0.5
   ;:hook

@@ -12,7 +12,7 @@
 (if (file-exists-p (expand-file-name dir-locals-file org-agenda-directory))
     nil
   (with-temp-file (expand-file-name dir-locals-file org-agenda-directory)
-    (insert "((org-mode (eval add-hook 'after-save-hook 'org-mobile-push nil t)))")
+    (insert "((org-mode (eval add-hook 'after-save-hook 'org-mobile-push-if-connected nil t)))")
     ))
 
 (if (file-exists-p (expand-file-name projectile-dirconfig-file org-agenda-directory))
