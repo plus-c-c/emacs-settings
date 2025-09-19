@@ -1,3 +1,10 @@
+(defun browse-url-new-tab (url)
+  (tab-bar-new-tab)
+  (browse-url url)
+  (sleep-for 0.2)
+  (tab-bar-switch-to-prev-tab)
+  (tab-bar-switch-to-next-tab)
+  )
 (use-package dashboard :ensure t :after (all-the-icons projectile)
   :init
   (require 'config-theme)
@@ -19,19 +26,19 @@
 	(;;line 1
 	 (,(all-the-icons-fileicon "brain" :height 1.0 :v-adjust 0.0)
           "AI"
-          "Open ellama"
-          (lambda (&rest _) (ellama))
+          "Open gptel"
+          (lambda (&rest _) (gptel (format "*%s*" (gptel-backend-name (default-value 'gptel-backend))) nil nil t))
 	  success)
 	);;line 1 end
         (;;line 2
 	 (,(all-the-icons-octicon "mark-github" :height 1.0 :v-adjust 0.0)
           "Github"
           "Browse Github"
-          (lambda (&rest _) (browse-url "github.com")))
+          (lambda (&rest _) (browse-url-new-tab "github.com")))
 	 (,(all-the-icons-material "search" :height 1.2 :v-adjust -0.25)
           "Search"
           "Browse Search engine"
-          (lambda (&rest _) (browse-url "duckduckgo.com")))
+          (lambda (&rest _) (browse-url-new-tab "duckduckgo.com")))
 	 );;line 2 end
 
 	(;;line 3
@@ -55,39 +62,39 @@
 	 (,(all-the-icons-fileicon "netlogo" :height 1.0 :v-adjust 0.0)
           "Scopus"
           "Open Scopus"
-          (lambda (&rest _) (browse-web "scopus.com"))
+          (lambda (&rest _) (browse-url-new-tab "scopus.com"))
 	  link)
 	 (,(all-the-icons-fileicon "netlogo" :height 1.0 :v-adjust 0.0)
           "WOS"
           "Open WOS"
-          (lambda (&rest _) (browse-web "webofscience.com"))
+          (lambda (&rest _) (browse-url-new-tab "webofscience.com"))
 	  link)
 	 (,(all-the-icons-fileicon "netlogo" :height 1.0 :v-adjust 0.0)
           "PubMed"
           "Open PubMed"
-          (lambda (&rest _) (browse-web "https://pubmed.ncbi.nlm.nih.gov/"))
+          (lambda (&rest _) (browse-url-new-tab "https://pubmed.ncbi.nlm.nih.gov/"))
 	  link)
 	 );;line 4 end
 	(;;line 5
 	 (,(all-the-icons-fileicon "netlogo" :height 1.0 :v-adjust 0.0)
           "NCBI"
           "Open NCBI"
-          (lambda (&rest _) (browse-web "https://www.ncbi.nlm.nih.gov/#!/landingpage"))
+          (lambda (&rest _) (browse-url-new-tab "https://www.ncbi.nlm.nih.gov/#!/landingpage"))
 	  link)
 	 (,(all-the-icons-fileicon "netlogo" :height 1.0 :v-adjust 0.0)
           "BLAST"
           "Open BLAST"
-          (lambda (&rest _) (browse-web "https://www.ncbi.nlm.nih.gov/#!/landingpage"))
+          (lambda (&rest _) (browse-url-new-tab "https://www.ncbi.nlm.nih.gov/#!/landingpage"))
 	  link)
 	 (,(all-the-icons-fileicon "netlogo" :height 1.0 :v-adjust 0.0)
           "UniProt"
           "Open UniProt"
-          (lambda (&rest _) (browse-web "https://www.uniprot.org/"))
+          (lambda (&rest _) (browse-url-new-tab "https://www.uniprot.org/"))
 	  link)
 	 (,(all-the-icons-fileicon "netlogo" :height 1.0 :v-adjust 0.0)
           "EMBI"
           "Open EMBI"
-          (lambda (&rest _) (browse-web "https://www.ebi.ac.uk/jdispatcher/"))
+          (lambda (&rest _) (browse-url-new-tab "https://www.ebi.ac.uk/jdispatcher/"))
 	  link)
 	 );;line 5 end
 	))

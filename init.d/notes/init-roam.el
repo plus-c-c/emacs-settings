@@ -25,7 +25,7 @@
       (insert "]]")
       ))
   :custom
-  (org-roam-directory (expand-directory-name-auto-create note-directory "roam-notes"))
+  (org-roam-directory (expand-directory-name-auto-create "roam-notes" note-directory))
   (org-roam-dailies-directory "daily/")
   (org-roam-db-gc-threshold most-positive-fixnum)
   (org-roam-capture-templates
@@ -46,7 +46,7 @@
          :immediate-finish t
          :unnarrowed t)))
   (org-capture-templates
-   '(("t" "Tasks" entry (file+headline "tasks.org" "Tasks")
+   '(("t" "Tasks" entry (file+headline "agenda/temp.org" "Tasks")
          "* TODO %?\n  %i\n  %a")
      ("s" "Slipbox" entry  (file "inbox.org")
       "* %?\n")))
@@ -98,6 +98,7 @@ _i_: Insert Roam  _I_: Import File
 		  ("d" org-roam-dailies-hydra/body)
 		  )
   :config
+  (expand-file-name-auto-create "inbox.org" org-directory)
   (cl-defmethod org-roam-node-type ((node org-roam-node))
   "Return the TYPE of NODE."
   (condition-case nil

@@ -20,8 +20,8 @@
 (add-to-list 'safe-local-variable-values '(eval add-hook 'after-save-hook 'org-mobile-push-if-connected nil t))
 (use-package org
   :defer 0.5
-  ;:hook
-  ;(org-mode . (lambda () (toggle-truncate-lines 1)))
+  :hook
+  (org-mode . (lambda () (toggle-truncate-lines -1)))
   :custom
   (org-directory (expand-directory-name-auto-create
 		  "org-notes"
