@@ -3,5 +3,6 @@
 (require 'config-fonts)
 (require 'config-buffer)
 (require 'config-dashboard)
+(use-package device-dashboard :after dashboard)
 (require 'config-frame)
 (provide 'init-UI)

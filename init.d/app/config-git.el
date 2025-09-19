@@ -1,2 +1,2 @@
-(use-package magit :ensure t :defer 1.0)
+(use-package magit :ensure t)
 (provide 'config-git)

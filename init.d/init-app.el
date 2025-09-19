@@ -3,5 +3,4 @@
 (require 'config-eaf)
 (require 'config-terminal)
 (require 'config-git)
-;(require 'config-zotero)
 (provide 'init-app)

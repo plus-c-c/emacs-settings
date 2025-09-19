@@ -45,4 +45,6 @@
       (setq locale-coding-system 'utf-8)
       ))
 (setq auto-save-default nil)
+;;screen color
+(add-to-list 'default-frame-alist '(background-color . "#282a36"))
 (provide 'early-init)

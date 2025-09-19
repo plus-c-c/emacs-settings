@@ -19,7 +19,6 @@
   "The directory of interleave")
 (add-to-list 'safe-local-variable-values '(eval add-hook 'after-save-hook 'org-mobile-push-if-connected nil t))
 (use-package org
-  :defer 0.5
   :hook
   (org-mode . (lambda () (toggle-truncate-lines -1)))
   :custom
@@ -35,7 +34,8 @@
 
 (require 'org-export-lisp)
 (use-package init-mobile
-  :after org)
+  :after org
+  )
 (use-package init-agenda
   :after (org projectile)
   :hydra
@@ -63,9 +63,9 @@ _,_: Insert Priority (C-c C-,)
   (global-set-key (kbd "C-c a") 'org-agenda)
   (define-key org-mode-map (kbd "C-c a") 'org-agenda-hydra/body)
   )
-(use-package init-ref  :defer 0.5  :after org)
+(use-package init-ref
+  :after org)
 (use-package init-roam
-  :defer 0.5
   :after org)
 (require 'config-interleave)
 (provide 'init-notes)

@@ -1,10 +1,8 @@
 (use-package all-the-icons :ensure t
   :if (display-graphic-p))
 
-(use-package dracula-theme :ensure t
-  :config
-  (load-theme 'dracula t))
-
+(use-package dracula-theme :ensure t)
+(load-theme 'dracula t)
 (use-package page-break-lines :ensure t
   :diminish page-break-lines-mode)
 

@@ -1,5 +1,5 @@
 (defcustom projectile-ignore-path-list
-  '("submodule" "site-lisp")
+  '("submodule" "site-lisp" "agenda" "utils")
   "Ignored submodule path list.")
 (defun projectile-ignore-path-list--function (file lis)
   (if (eq nil lis)
@@ -86,6 +86,10 @@ _e_: recent                         ^ ^                  _L_: install        _o_
     ("P" projectile-test-project)
     ("u" projectile-run-project)
     )
+  :init
+  (setq dashboard-projects-backend 'projectile)
+  (add-to-list 'dashboard-items '(projects . 5))
+  (dashboard-open)
 )
 
 (use-package counsel-projectile
