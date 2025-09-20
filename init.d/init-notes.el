@@ -35,6 +35,7 @@
 (require 'org-export-lisp)
 (use-package init-mobile
   :after org
+  :if (network-connected-p)
   )
 (use-package init-agenda
   :after (org projectile)

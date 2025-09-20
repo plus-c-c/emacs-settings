@@ -89,7 +89,7 @@ _e_: recent                         ^ ^                  _L_: install        _o_
   :init
   (setq dashboard-projects-backend 'projectile)
   (add-to-list 'dashboard-items '(projects . 5))
-  (dashboard-open)
+  (dashboard-refresh)
 )
 
 (use-package counsel-projectile

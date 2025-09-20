@@ -7,8 +7,7 @@
   )
 (use-package dashboard :ensure t :after (all-the-icons config-theme)
   :init
-  (dashboard-open)
-					;(dashboard-setup-startup-hook)
+  (dashboard-setup-startup-hook)
   :custom
   (dashboard-startup-banner 'logo)
   (dashboard-startupify-list '(dashboard-insert-banner
@@ -107,5 +106,8 @@
    :map dashboard-mode-map
    ("O" . org-roam-ui-open))
   )
-
+(defun dashboard-refresh ()
+  "Refresh dashboard."
+  (if (string-equal (buffer-name) "*dashboard*")
+      (dashboard-open)))
 (provide 'config-dashboard)

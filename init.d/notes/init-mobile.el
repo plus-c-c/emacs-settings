@@ -44,5 +44,5 @@
 (org-mobile-pull-if-connected)
 (org-mobile-push-if-connected)
 (org-agenda-reload)
-(dashboard-open)
+(dashboard-refresh)
 (provide 'init-mobile)
