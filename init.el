@@ -5,6 +5,6 @@
 (require 'init-UI)
 (use-package init-edit :defer 1.0)
 (use-package init-app :defer 1.5)
-(use-package init-codes :defer 1.0)
+(use-package init-codes)
 (use-package init-notes :defer 1.5)
 (provide 'init)
