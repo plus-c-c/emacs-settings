@@ -1,7 +1,5 @@
 (add-to-list 'load-path (expand-file-name "edit" emacs-config-path))
 (use-package ivy :ensure t
-  :init
-  (ivy-mode 1)
   :custom
   (ivy-use-virtual-buffers t)
   (search-default-mode #'char-fold-to-regexp)
@@ -21,12 +19,14 @@
 (use-package swiper :ensure t)
 (use-package counsel
   :ensure t
-  :diminish counsel-mode
-  :hook (after-init . counsel-mode))
+  :diminish counsel-mode)
 (use-package ivy-hydra :ensure t
   :after ivy)
+(ivy-mode 1)
+(counsel-mode 1)
 ;; better M-x
-(use-package amx :ensure t :init (amx-mode) :diminish amx-mode)
+(use-package amx :ensure t :diminish amx-mode)
+(amx-mode)
 ;;better C-a and C-e
 (use-package highlight-parentheses :ensure t
   :diminish highlight-parentheses-mode
@@ -42,13 +42,13 @@
 (use-package vundo :ensure t)
 ;;move or copy the whole line or region
 (use-package move-dup :ensure t
-  :hook (after-init . global-move-dup-mode)
   :diminish move-dup-mode
   :bind (("M-P"   . move-dup-move-lines-up)
 	 ("C-M-P" . move-dup-duplicate-up)
 	 ("M-N"   . move-dup-move-lines-down)
 	 ("C-M-N" . move-dup-duplicate-down)))
-(require 'config-gptel)
+(global-move-dup-mode 1)
+
 (use-package auto-save :load-path "~/.emacs.d/site-lisp/auto-save"
   :custom
   (auto-save-idle 10)
@@ -59,9 +59,10 @@
       (string-suffix-p
        "gpg"
       (file-name-extension (buffer-name)) t))))
-  :config
-  (auto-save-enable)
   )
+
+(auto-save-enable)
+(require 'config-gptel)
 (if (eq system-type 'windows-nt)
     (require 'pasteex-mode)
   nil)

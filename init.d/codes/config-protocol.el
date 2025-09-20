@@ -1,4 +1,3 @@
-(require 'config-lang-hooks)
 (use-package lsp-bridge
   :load-path "site-lisp/lsp-bridge"
   :diminish lsp-bridge-mode
