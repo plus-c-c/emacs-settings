@@ -19,9 +19,8 @@
   (eaf-proxy-host "127.0.0.1")
   (eaf-browser-continue-where-left-off t)
   (eaf-browser-enable-adblocker nil)
-  (eaf-browser-chrome-browser-name "Chromium")
   (browse-url-browser-function 'eaf-open-browser)
-  (eaf-browse-blank-page-url "https://zjuers.com")
+  (eaf-browser-blank-page-url "https://zjuers.com")
   (eaf-webengine-default-zoom "2.0")
   (eaf-webengine-font-size 20)
   (eaf-webengine-fixed-font-size 20)
@@ -29,6 +28,9 @@
   (eaf-webengine-font-family "WenQuanYi Micro Hei Mono")
   (eaf-browser-extension-list
    '("html" "htm"))
+  (eaf-browser-chrome-browser-name "Chromium")
+  (eaf-chrome-bookmark-file "~/.config/chromium/Default/Bookmarks")
+  (eaf-browser-chrome-history-file "~/.config/chromium/Default/History")
   :config
   (if (eq system-type 'gnu/linux)
       (setq eaf-browser-auto-import-chrome-cookies t)

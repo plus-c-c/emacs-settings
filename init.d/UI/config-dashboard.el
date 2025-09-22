@@ -45,7 +45,7 @@
       (,(all-the-icons-material "search" :height 1.2 :v-adjust -0.25)
        "Search"
        "Browse Search engine"
-       (lambda (&rest _) (browse-url-new-tab "duckduckgo.com")))
+       (lambda (&rest _) (browse-url-new-tab "https://duckduckgo.com")))
       );;line 2 end
 
      (;;line 3

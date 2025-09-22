@@ -4,9 +4,6 @@
   :bind
   (:map lsp-bridge-mode-map
   ("C-c l" . lsp-bridge-hydra/body))
-  :custom
-  ;(lsp-bridge-enable-auto-format-code t)
-  (lsp-bridge-enable-org-babel t)
   :hydra
   (lsp-bridge-hydra (:color blue :hint nil)
 		    "
@@ -39,6 +36,9 @@ _i_,_I_: Find Implication       _l_: List Diagnoses
   :commands global-lsp-bridge-mode
   )
 (global-lsp-bridge-mode)
+(setopt lsp-bridge-enable-org-babel t)
+(setopt lsp-bridge-python-lsp-server "pylsp")
+(setopt lsp-bridge-python-multi-lsp-server "pylsp_ruff")
 (add-hook-list language-modes-list 'lsp-bridge-mode)
 (use-package dape
   :ensure t

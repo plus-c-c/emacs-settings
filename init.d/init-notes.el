@@ -25,6 +25,7 @@
   (org-directory (expand-directory-name-auto-create
 		  "org-notes"
 		  note-directory))
+  (org-modules '(ol-bibtex))
   :config
   (defun eaf-org-open-file (file &optional link) "An wrapper function on eaf-(or )pen."
 	 (eaf-open file))
