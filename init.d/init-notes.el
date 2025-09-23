@@ -32,7 +32,7 @@
   (add-to-list 'org-file-apps '("\\.pdf\\'" . eaf-org-open-file))
   (add-to-list 'org-file-apps '("\\.x?html?\\'" . eaf-org-open-file))
   )
-
+(require 'config-display)
 (require 'org-export-lisp)
 (use-package init-mobile
   :after org

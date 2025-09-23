@@ -10,3 +10,6 @@
 [submodule "site-lisp/auto-save"]
 	path = site-lisp/auto-save
 	url = https://github.com/manateelazycat/auto-save
+[submodule "site-lisp/emacs-pet"]
+	path = site-lisp/emacs-pet
+	url = https://github.com/wyuenho/emacs-pet.git

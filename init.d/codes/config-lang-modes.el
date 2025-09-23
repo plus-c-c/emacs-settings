@@ -14,10 +14,6 @@
   :mode ("\\.rktl\\'" . racket-mode)
   )
 
-(use-package python-mode
-  :ensure t
-  :defer t)
-
 (use-package jtsx
   :ensure t
   :mode (("\\.jsx\\'" . jtsx-js-mode)

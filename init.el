@@ -7,4 +7,5 @@
 (use-package init-app :defer 1.5)
 (use-package init-codes)
 (use-package init-notes :defer 1.5)
+(load custom-file)
 (provide 'init)

@@ -1,5 +1,4 @@
 (use-package org-inline-anim
   :ensure t
-  :hook (org-mode . org-inline-anim-mode)
-  )
+  :hook (org-mode .org-inline-anim-mode))
 (provide 'config-display)
