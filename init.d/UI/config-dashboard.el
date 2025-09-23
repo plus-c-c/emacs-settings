@@ -109,7 +109,7 @@
      ))
 
   :bind
-  (("C-c d" . dashboard-open)
+  (("C-c m" . dashboard-open)
    :map dashboard-mode-map
    ("O" . org-roam-ui-open))
   )
