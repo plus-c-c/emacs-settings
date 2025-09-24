@@ -26,7 +26,7 @@
   (dashboard-icon-type 'all-the-icons)
   (dashboard-items '((recents . 5)
 		     (bookmarks . 3)
-		     (agenda . 10)))
+		     ))
   (dashboard-navigator-buttons
    `(
      (;;line 1

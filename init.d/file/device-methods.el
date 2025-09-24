@@ -1,4 +1,5 @@
-(provide 'external-device-methods)
+;;; device-methods.el --- Device interface for emacs. -*- lexical-binding: t -*-
+(provide 'device-methods)
 
 (defun expand-file-name-auto-create (file env)
   "Get file directory and create a new empty file if it does not exist."
@@ -92,4 +93,3 @@
   (expand-file-name x (expand-file-name (user-login-name) "/run/media"))
   (concat x ":/")
   ))
-

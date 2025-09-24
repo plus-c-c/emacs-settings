@@ -44,5 +44,6 @@
 (org-mobile-pull-if-connected)
 (org-mobile-push-if-connected)
 (org-agenda-reload)
+(add-to-list 'dashboard-items '(agenda . 10) -3)
 (dashboard-refresh)
 (provide 'init-mobile)
