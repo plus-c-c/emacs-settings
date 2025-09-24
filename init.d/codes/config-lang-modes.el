@@ -46,12 +46,8 @@
 
 
 ;;;mindmap
-(defun plantuml-jar-version ()
-  "get plantuml.jar version"
-  "v1.2025.7")
 (defun plantuml-jar-online-path ()
-  (concat "https://github.com/plantuml/plantuml/releases/download/"
-	  (plantuml-jar-version)
+  (concat "https://github.com/plantuml/plantuml/releases/latest/download/"
 	  "/plantuml.jar"))
 (use-package plantuml-mode
   :ensure t
@@ -61,10 +57,14 @@
     "plantuml.jar"
     (expand-directory-name-auto-create "plantuml" user-emacs-directory)))
   :config
-  (if (not (file-exists-p plantuml-jar-path))
-      (prog1
-	  (message "Downloading plantuml.jar")
+  (if (eq system-type 'gnu/linux)
+      (setq plantuml-exec-mode 'executable)
+    (setq plantuml-exec-mode 'jar)
+    (if (not (file-exists-p plantuml-jar-path))
+	(prog1
+	    (message "Downloading plantuml.jar")
 	  (auto-download-from-web (plantuml-jar-online-path) plantuml-jar-path)
 	  ))
+    )
   )
 (provide 'config-lang-modes)
