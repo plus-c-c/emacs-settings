@@ -3,9 +3,9 @@
   (markdown-command "pandoc -f markdown -t html")
   :ensure t
   :defer t)
-(use-package typescript-mode
-  :ensure t
-  :defer t)
+
+;;;elisp
+(diminish 'eldoc-mode)
 (use-package racket-mode
   :ensure t
   :config
@@ -14,13 +14,38 @@
   :mode ("\\.rktl\\'" . racket-mode)
   )
 
+;;;python
+(setq lsp-bridge-python-lsp-server "pyright")
+(setq lsp-bridge-python-multi-lsp-server "pyright_ruff")
+(if (eq system-type 'gnu/linux)
+    (setq lsp-bridge-python-command "/usr/bin/python3"))
+(use-package pet :ensure t
+  :diminish pet-mode)
+(add-hook 'python-base-mode-hook 'pet-mode -10)
+(use-package pyvenv :ensure t)
+
+(add-hook 'python-base-mode-hook (lambda ()
+				   (setq-local pyvenv-activate (pet-virtualenv-root))
+				   (message (format "Setting virtual environment: %s" (pet-virtualenv-root)))
+				   )
+	  -9)
+(pyvenv-mode)
+(add-hook 'pyvenv-post-activate-hooks
+          (lambda ()
+            (lsp-bridge-restart-process)))
+
+;;;js
+(use-package typescript-mode
+  :ensure t
+  :defer t)
 (use-package jtsx
   :ensure t
   :mode (("\\.jsx\\'" . jtsx-js-mode)
 	 ("\\.tsx\\'" . jtsx-tsx-mode))
   :defer t)
-(diminish 'eldoc-mode)
-;mindmap
+
+
+;;;mindmap
 (defun plantuml-jar-version ()
   "get plantuml.jar version"
   "v1.2025.7")
