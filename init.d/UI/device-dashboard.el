@@ -1,5 +1,8 @@
+;;; device-dashboard.el --- Device bar for dashboard. -*- lexical-binding: t -*-
+(require 'config-dashboard)
+(require 'device-methods)
 (defun dashboard-external-device-format (dev-name)
-  "Format function for 'dashboard-insert-external-devices'."
+  "Format function for `dashboard-insert-external-devices'."
   (let* ((dev-list (match-device-details-by-path
 		    (if (eq system-type 'gnu/linux)
 			(external-device-path dev-name)

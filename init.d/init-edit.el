@@ -19,7 +19,10 @@
 (use-package swiper :ensure t)
 (use-package counsel
   :ensure t
-  :diminish counsel-mode)
+  :diminish counsel-mode
+  :custom
+  (counsel-find-file-extern-extensions nil)
+  )
 (use-package ivy-hydra :ensure t
   :after ivy)
 (ivy-mode 1)

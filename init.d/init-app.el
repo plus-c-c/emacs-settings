@@ -3,4 +3,5 @@
 (require 'config-eaf)
 (require 'config-terminal)
 (require 'config-git)
+(require 'config-guess-word)
 (provide 'init-app)

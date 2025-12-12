@@ -3,7 +3,7 @@
   :commands (gptel gptel-send gptel-rewrite)
   :bind ("C-c g" . gptel-menu)
   ("C-c G" . gptel)
-  
+
   :custom
   (gptel-default-mode 'org-mode)
   (gptel-directives
@@ -39,8 +39,13 @@
 	  )
 	)
 
+  (setq deepseek-backend (gptel-make-deepseek "Deepseek"
+     :stream t
+     :key (lambda () (auth-source-pick-first-password :host "api.deepseek.com"))  ; 替换为你的实际API Key
+     ))
   (setq-default gptel-backend ollama-backend-stream)
-
   (setq-default gptel-model 'deepseek-r1)
+
+
   )
 (provide 'config-gptel)

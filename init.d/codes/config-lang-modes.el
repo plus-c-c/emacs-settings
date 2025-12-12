@@ -56,15 +56,33 @@
    (expand-file-name
     "plantuml.jar"
     (expand-directory-name-auto-create "plantuml" user-emacs-directory)))
-  :config
-  (if (eq system-type 'gnu/linux)
-      (setq plantuml-exec-mode 'executable)
-    (setq plantuml-exec-mode 'jar)
-    (if (not (file-exists-p plantuml-jar-path))
-	(prog1
-	    (message "Downloading plantuml.jar")
-	  (auto-download-from-web (plantuml-jar-online-path) plantuml-jar-path)
-	  ))
-    )
   )
+(if (eq system-type 'gnu/linux)
+    (setq plantuml-default-exec-mode 'executable)
+  (setq plantuml-default-exec-mode 'jar)
+  )
+(if (not (file-exists-p plantuml-jar-path))
+    (prog1
+	(message "Downloading plantuml.jar")
+      (auto-download-from-web (plantuml-jar-online-path) plantuml-jar-path)
+      ))
+
+(setq org-plantuml-exec-mode 'plantuml)
+
+(use-package mermaid-mode
+  :ensure t)
+(use-package ob-mermaid
+  :ensure t
+  :custom (ob-mermaid-cli-path "mmdc"))
+;;;graph
+(use-package ess :ensure t)
+
+;;;tex
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.5))
+;;;babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((plantuml . t)
+   (R . t)
+   (mermaid . t)))
 (provide 'config-lang-modes)

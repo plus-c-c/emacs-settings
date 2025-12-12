@@ -1,3 +1,5 @@
+;;; config-fonts.el --- Font settings for emacs. -*- lexical-binding: t -*-
+(require 'all-the-icons)
 (use-package font-utils
   :ensure t)
 (if (not (font-utils-exists-p "all-the-icons"))

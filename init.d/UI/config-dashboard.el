@@ -1,3 +1,4 @@
+;;; config-dashboard.el --- Initial buffer for emacs. -*- lexical-binding: t -*-
 (defun browse-url-new-tab (url)
   (tab-bar-new-tab)
   (browse-url url)
@@ -34,6 +35,11 @@
        "AI"
        "Open gptel"
        (lambda (&rest _) (gptel (format "*%s*" (gptel-backend-name (default-value 'gptel-backend))) nil nil t))
+       success)
+      (,(all-the-icons-octicon "book" :height 1.0 :v-adjust 0.0)
+       "Guess"
+       "Open guess-word game"
+       (lambda (&rest _) (guess-word))
        success)
       );;line 1 end
 
@@ -109,9 +115,9 @@
      ))
 
   :bind
-  (("C-c m" . dashboard-open)
-   :map dashboard-mode-map
-   ("O" . org-roam-ui-open))
+  (
+   ("C-c m" . dashboard-open)
+   )
   )
 (defun dashboard-refresh ()
   "Refresh dashboard."

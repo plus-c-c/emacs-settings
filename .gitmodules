@@ -10,3 +10,6 @@
 [submodule "site-lisp/auto-save"]
 	path = site-lisp/auto-save
 	url = https://github.com/manateelazycat/auto-save
+[submodule "site-lisp/guess-word"]
+	path = site-lisp/guess-word
+	url = https://github.com/Qquanwei/emacs-guess-word-game.git

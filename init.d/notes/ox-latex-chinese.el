@@ -300,21 +300,30 @@ to latex."
 
 (defcustom oxlc/org-latex-classes
   '(("ctexart"
-     "\\documentclass[fontset=none,UTF8,a4paper,zihao=-4]{ctexart}"
+     "\\documentclass[fontset=none,UTF8,a4paper,zihao=-4]{ctexart}
+
+%%% 设置页面边距 %%%
+\\usepackage[top=2.54cm, bottom=2.54cm, left=3.17cm, right=3.17cm]{geometry} %"
      ("\\section{%s}" . "\\section*{%s}")
      ("\\subsection{%s}" . "\\subsection*{%s}")
      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
      ("\\paragraph{%s}" . "\\paragraph*{%s}")
      ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
     ("ctexrep"
-     "\\documentclass[fontset=none,UTF8,a4paper,zihao=-4]{ctexrep}"
+     "\\documentclass[fontset=none,UTF8,a4paper,zihao=-4]{ctexrep}
+
+%%% 设置页面边距 %%%
+\\usepackage[top=2.54cm, bottom=2.54cm, left=3.17cm, right=3.17cm]{geometry} %"
      ("\\part{%s}" . "\\part*{%s}")
      ("\\chapter{%s}" . "\\chapter*{%s}")
      ("\\section{%s}" . "\\section*{%s}")
      ("\\subsection{%s}" . "\\subsection*{%s}")
      ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
     ("ctexbook"
-     "\\documentclass[fontset=none,UTF8,a4paper,zihao=-4]{ctexbook}"
+     "\\documentclass[fontset=none,UTF8,a4paper,zihao=-4]{ctexbook}
+
+%%% 设置页面边距 %%%
+\\usepackage[top=2.54cm, bottom=2.54cm, left=3.17cm, right=3.17cm]{geometry} %"
      ("\\part{%s}" . "\\part*{%s}")
      ("\\chapter{%s}" . "\\chapter*{%s}")
      ("\\section{%s}" . "\\section*{%s}")
@@ -322,7 +331,7 @@ to latex."
      ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
     ("beamer"
      "\\documentclass{beamer}
-               \\usepackage[fontset=none,UTF8,a4paper,zihao=-4]{ctex}"
+               \\usepackage[fontset=none,UTF8,zihao=-4]{ctex}"
      org-beamer-sectioning))
   "Please see the info of `org-latex-classes', when `oxlc/org-latex-chinese-enable'
 set to t, its value will override the value of `oxlc/org-latex-classes' before exporting
@@ -348,10 +357,7 @@ org 不建议自定义 org-latex-default-package-alist 变量，但 'inputenc' a
 %%% 默认使用的latex宏包 %%%
 \\usepackage{tikz}
 \\usepackage{CJKulem}
-\\usepackage{graphicx}
-
-%%% 设置页面边距 %%%
-\\usepackage[top=2.54cm, bottom=2.54cm, left=3.17cm, right=3.17cm]{geometry} %")
+\\usepackage{graphicx}")
   "Please see the info of `org-latex-packages-alist', when `oxlc/org-latex-chinese-enable'
 set to t, its value will override the value of `org-latex-packages-alist' before exporting
 to latex."

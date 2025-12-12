@@ -111,10 +111,10 @@ _i_: Insert Roam  _I_: Import File
   (require 'org-roam-dailies)
   (setq org-roam-database-connector 'sqlite)
   )
-
 (use-package org-roam-ui
   :ensure t
   :after org-roam
+  :diminish org-roam-ui-follow-mode
   :custom
   (org-roam-ui-sync-theme t)
   (org-roam-ui-follow t)

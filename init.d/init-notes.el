@@ -27,8 +27,6 @@
 		  note-directory))
   (org-modules '(ol-bibtex))
   :config
-  (defun eaf-org-open-file (file &optional link) "An wrapper function on eaf-(or )pen."
-	 (eaf-open file))
   (add-to-list 'org-file-apps '("\\.pdf\\'" . eaf-org-open-file))
   (add-to-list 'org-file-apps '("\\.x?html?\\'" . eaf-org-open-file))
   )

@@ -1,5 +1,7 @@
 (add-to-list 'load-path (expand-file-name "site-lisp/emacs-application-framework" user-emacs-directory))
 
+
+
 (global-set-key (kbd "C-c w") 'browse-web)
 
 (use-package eaf :diminish eaf-mode
@@ -12,6 +14,8 @@
 	    eaf-is-member-of-focus-fix-wms t))
   )
 
+(defun eaf-org-open-file (file &optional link) "An wrapper function on eaf-(or )pen."
+       (eaf-open file))
 (use-package eaf-browser :after eaf
   :custom
   (eaf-proxy-port "7890")
@@ -47,7 +51,12 @@
 
 (if (eq system-type 'gnu/linux)
     (use-package eaf-file-manager
-      :after eaf
-      :load-path "~/.emacs.d/site-lisp/emacs-application-framework"))
+      :after eaf))
+(use-package eaf-image-viewer :after eaf)
+(use-package eaf-video-player :after eaf)
+
+(use-package eaf-video-editor :after eaf)
+(use-package eaf-org-previewer :after eaf)
+(use-package eaf-markdown-previewer :after eaf)
 
 (provide 'config-eaf)
