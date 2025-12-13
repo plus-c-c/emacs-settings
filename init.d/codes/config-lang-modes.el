@@ -78,11 +78,15 @@
 (use-package ess :ensure t)
 
 ;;;tex
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.5))
+
 ;;;babel
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((plantuml . t)
+ '(
+   (python . t)
+   (plantuml . t)
    (R . t)
-   (mermaid . t)))
+   (mermaid . t)
+   ))
+(setq org-confirm-babel-evaluate nil)
 (provide 'config-lang-modes)

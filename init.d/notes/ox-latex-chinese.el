@@ -222,15 +222,15 @@
   :group 'org-export-latex-chinese)
 
 (defcustom oxlc/org-latex-commands
-  '("xelatex -interaction nonstopmode -output-directory %o %f"
+  '("xelatex -interaction nonstopmode -shell-escape -output-directory %o %f"
     "biber %b"
-    "xelatex -interaction nonstopmode -output-directory %o %f"
-    "xelatex -interaction nonstopmode -output-directory %o %f")
+    "xelatex -interaction nonstopmode -shell-escape -output-directory %o %f"
+    "xelatex -interaction nonstopmode -shell-escape -output-directory %o %f")
   "Set latex commands which will be used by `oxlc/org-latex-compile'."
   :group 'org-export-latex-chinese)
 
 (defcustom oxlc/org-latex-preview-commands
-  '("xelatex -interaction nonstopmode -output-directory %o %f")
+  '("xelatex -interaction nonstopmode -shell-escape -output-directory %o %f")
   "Set latex commands used for preview latex snippet, which will be
 used by `oxlc/org-latex-compile'.
 

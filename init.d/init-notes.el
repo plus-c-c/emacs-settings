@@ -26,6 +26,7 @@
 		  "org-notes"
 		  note-directory))
   (org-modules '(ol-bibtex))
+  (org-format-latex-options (plist-put org-format-latex-options :scale 2.5))
   :config
   (add-to-list 'org-file-apps '("\\.pdf\\'" . eaf-org-open-file))
   (add-to-list 'org-file-apps '("\\.x?html?\\'" . eaf-org-open-file))
