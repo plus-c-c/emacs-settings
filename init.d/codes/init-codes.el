@@ -1,5 +1,4 @@
-(require 'config-lang-hooks)
-(require 'config-lang-modes)
+(require 'config-lang-list)
 (require 'config-treesit)
 (require 'config-protocol)
 (require 'config-projectile)

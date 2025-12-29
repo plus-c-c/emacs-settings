@@ -1,3 +1,5 @@
+(setq org-confirm-babel-evaluate nil)
+
 (use-package lsp-bridge
   :load-path "site-lisp/lsp-bridge"
   :diminish lsp-bridge-mode
@@ -39,7 +41,7 @@ _i_,_I_: Find Implication       _l_: List Diagnoses
   :commands global-lsp-bridge-mode
   )
 (global-lsp-bridge-mode)
-(add-hook-list language-modes-list 'lsp-bridge-mode)
+(add-hook-list language-hooks-list 'lsp-bridge-mode)
 (use-package dape
   :ensure t
   :hydra
