@@ -1,4 +1,3 @@
-(add-to-list 'load-path (expand-file-name "UI" emacs-config-path))
 (require 'config-theme)
 (require 'config-fonts)
 (require 'config-buffer)

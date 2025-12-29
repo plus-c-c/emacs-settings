@@ -1,4 +1,3 @@
-(add-to-list 'load-path (expand-file-name "edit" emacs-config-path))
 (use-package ivy :ensure t
   :custom
   (ivy-use-virtual-buffers t)

@@ -1,5 +1,3 @@
-(add-to-list 'load-path (expand-file-name "notes" emacs-config-path))
-
 (defcustom note-directory
   (expand-directory-name-auto-create
    ""
