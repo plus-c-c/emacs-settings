@@ -210,14 +210,15 @@
 
 (defcustom oxlc/org-latex-fonts
   '((mainfont "Times New Roman")
-    (CJKmainfont "SimSun" "宋体" "新宋体" "宋体" "STSong" "STZhongson" "华文中宋")
-    (CJKmainfont-italic "KaiTi_GB2312" "楷体" "KaiTi" "楷体_GB2312" "STKaiti" "华文行楷")
-    (CJKsansfont "WenQuanYi Micro Hei" "文泉驿微米黑" "文泉驿等宽微米黑" "微软雅黑"
-                 "Microsoft Yahei" "Microsoft_Yahei"  "文泉驿等宽正黑" "黑体"
-                 "文泉驿正黑" "文泉驿点阵正黑" "SimHei" "华文细黑")
-    (CJKmonofont "WenQuanYi Micro Hei" "文泉驿微米黑" "文泉驿等宽微米黑" "微软雅黑"
-                 "Microsoft Yahei" "Microsoft_Yahei"  "文泉驿等宽正黑" "黑体"
-                 "文泉驿正黑" "文泉驿点阵正黑" "SimHei" "华文细黑"))
+    (CJKmainfont "宋体" "SimSun" "新宋体" "宋体" "STSong" "STZhongson" "华文中宋")
+    (CJKmainfont-italic "楷体" "KaiTi_GB2312" "KaiTi" "楷体_GB2312" "STKaiti" "华文行楷")
+    (CJKmainfont-bold "黑体" "SimHei" "WenQuanYi Micro Hei" "文泉驿微米黑" "文泉驿等宽微米黑")
+    (CJKsansfont "黑体" "SimHei" "WenQuanYi Micro Hei" "文泉驿微米黑" "文泉驿等宽微米黑" "微软雅黑"
+                 "Microsoft Yahei" "Microsoft_Yahei"  "文泉驿等宽正黑"
+                 "文泉驿正黑" "文泉驿点阵正黑" "华文细黑")
+    (CJKmonofont "黑体" "SimHei" "WenQuanYi Micro Hei" "文泉驿微米黑" "文泉驿等宽微米黑" "微软雅黑"
+                 "Microsoft Yahei" "Microsoft_Yahei"  "文泉驿等宽正黑"
+                 "文泉驿正黑" "文泉驿点阵正黑" "华文细黑"))
   "Set fonts candidates which will used by latex."
   :group 'org-export-latex-chinese)
 
@@ -299,7 +300,46 @@ to latex."
   :group 'org-export-latex-chinese)
 
 (defcustom oxlc/org-latex-classes
-  '(("ctexart"
+  '(("ctexart-formal"
+     "\\documentclass[fontset=none,UTF8,a4paper,zihao=-4]{ctexart}
+
+%%% 设置页面边距 %%%
+\\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry} %
+\\pagestyle{fancy}
+\\fancyhf{}
+\\fancyhead[C]{\\thepage}
+\\renewcommand{\\headrulewidth}{0pt}
+
+% 行距设置
+\\renewcommand{\\baselinestretch}{1.5}
+\\setlength{\\parindent}{2em}
+
+% 标题格式设置
+\\titleformat{\\section}{\\centering\\sanhao\\songti\\bfseries}{\\thesection}{1em}{}
+\\titleformat{\\subsection}{\\xiaosan\\songti\\bfseries}{\\thesubsection}{1em}{}
+\\titleformat{\\subsubsection}{\\sihao\\songti\\bfseries}{\\thesubsubsection}{1em}{}
+
+% 字体大小定义
+\\newcommand{\\sanhao}{\\fontsize{16pt}{\\baselineskip}\\selectfont}
+\\newcommand{\\xiaosan}{\\fontsize{15pt}{\\baselineskip}\\selectfont}
+\\newcommand{\\sihao}{\\fontsize{14pt}{\\baselineskip}\\selectfont}
+\\newcommand{\\xiaosi}{\\fontsize{12pt}{\\baselineskip}\\selectfont}
+\\newcommand{\\wuhao}{\\fontsize{10.5pt}{\\baselineskip}\\selectfont}
+
+% 目录格式设置
+\\renewcommand{\\cfttoctitlefont}{\\hfill\\sanhao\\songti\\bfseries}
+\\renewcommand{\\cftaftertoctitle}{\\hfill}
+\\renewcommand{\\cftsecleader}{\\cftdotfill{\\cftdotsep}}
+\\renewcommand{\\cftsecfont}{\\xiaosi\\songti}
+\\renewcommand{\\cftsecpagefont}{\\xiaosi\\songti}
+\\setlength{\\cftbeforesecskip}{0pt}
+"
+     ("\\section{%s}" . "\\section*{%s}")
+     ("\\subsection{%s}" . "\\subsection*{%s}")
+     ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+     ("\\paragraph{%s}" . "\\paragraph*{%s}")
+     ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+    ("ctexart"
      "\\documentclass[fontset=none,UTF8,a4paper,zihao=-4]{ctexart}
 
 %%% 设置页面边距 %%%
@@ -390,6 +430,7 @@ to latex."
 (defun oxlc/generate-latex-fonts-setting ()
   "Generate a latex fonts setting."
   (let ((mainfont (oxlc/get-available-font 'mainfont))
+        (cjkmainfont-bold (oxlc/get-available-font 'CJKmainfont-bold))
         (cjkmainfont-italic (oxlc/get-available-font 'CJKmainfont-italic))
         (cjkmainfont (oxlc/get-available-font 'CJKmainfont))
         (cjksansfont (oxlc/get-available-font 'CJKsansfont))
@@ -398,7 +439,7 @@ to latex."
             (when mainfont (format "\\setmainfont{%s}\n" mainfont))
             (when cjkmainfont
               (if cjkmainfont-italic
-                  (format "\\setCJKmainfont[ItalicFont={%s}]{%s}\n" cjkmainfont-italic cjkmainfont)
+                  (format "\\setCJKmainfont[BoldFont={%s},ItalicFont={%s}]{%s}\n" cjkmainfont-bold cjkmainfont-italic cjkmainfont)
                 (format "\\setCJKmainfont{%s}\n" cjkmainfont)))
             (when cjksansfont (format "\\setCJKsansfont{%s}\n" cjksansfont))
             (when cjkmonofont (format "\\setCJKmonofont{%s}\n" cjkmonofont)))))
