@@ -7,4 +7,6 @@
       ))
 (defun network-connected-p ()
   "Check whether network is connected."
-  (string-equal (shell-command-to-string "nmcli -t -f STATE general") "connected\n"))
+  (if (memq system-type '(windows-nt cygwin ms-dos))
+      (string-equal (shell-command-to-string "powershell Test-Connection 8.8.8.8 -Count 1 -Quiet") "True\n")
+  (string-equal (shell-command-to-string "nmcli -t -f STATE general") "connected\n")))
