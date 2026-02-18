@@ -1,5 +1,4 @@
 (require 'org-mobile)
-
 (if (eq system-type 'gnu/linux)
     (setq org-mobile-directory (expand-directory-name-auto-create "mobile/org" "/cloud/webdav"))
   (setq org-mobile-directory  "z:/mobile/org"))

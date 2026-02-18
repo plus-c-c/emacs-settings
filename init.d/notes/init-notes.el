@@ -30,7 +30,7 @@
 (require 'config-display)
 (require 'org-export-lisp)
 (use-package init-mobile
-  :after org
+  :after (org init-agenda)
   :if (network-connected-p)
   )
 (use-package init-agenda
