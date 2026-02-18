@@ -23,11 +23,6 @@
 		    (when scale-factor (add-to-list 'face-font-rescale-alist
 						    `(,font . ,scale-factor)))
 		    )))
-(cond
-  ((memq system-type '(windows-nt ms-dos cygwin))
-   (global-text-scale-adjust 20))
-  (t nil)
-  )
 
 (defun cabins--font-setup (&optional default-fonts unicode-fonts emoji-fonts cjk-fonts)
   "Font setup, with optional DEFAULT-FONTS, UNICODE-FONTS, EMOJI-FONTS, CJK-FONTS."

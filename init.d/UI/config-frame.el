@@ -1,12 +1,5 @@
 (require 'tab-bar)
 (add-hook 'dashboard-after-initialize-hook 'tab-bar-history-mode)
-(define-key tab-bar-mode-map (kbd "M-s-n") 'tab-bar-switch-to-next-tab)
-(define-key tab-bar-mode-map (kbd "M-s-p") 'tab-bar-switch-to-prev-tab)
-(define-key tab-bar-mode-map (kbd "M-s-t") 'tab-bar-new-tab)
-(define-key tab-bar-mode-map (kbd "M-s-x") 'tab-bar-close-tab)
-(define-key tab-bar-history-mode-map (kbd "M-s-f") 'tab-bar-history-forward)
-(define-key tab-bar-history-mode-map (kbd "M-s-b") 'tab-bar-history-back)
-(provide 'config-frame)
 (use-package tab-bar
   :hook (window-setup . tab-bar-mode)
   :config
@@ -34,3 +27,20 @@
     (add-hook 'after-make-frame-functions
               #'(lambda (&rest _) (force-mode-line-update))))
   )
+(if (eq system-type 'gnu/linux)
+    (progn
+      (define-key tab-bar-mode-map (kbd "M-s-n") 'tab-bar-switch-to-next-tab)
+      (define-key tab-bar-mode-map (kbd "M-s-p") 'tab-bar-switch-to-prev-tab)
+      (define-key tab-bar-mode-map (kbd "M-s-t") 'tab-bar-new-tab)
+      (define-key tab-bar-mode-map (kbd "M-s-x") 'tab-bar-close-tab)
+      )
+  (progn
+    (define-key tab-bar-map (kbd "M-s-n") 'tab-bar-switch-to-next-tab)
+    (define-key tab-bar-map (kbd "M-s-p") 'tab-bar-switch-to-prev-tab)
+    (define-key tab-bar-map (kbd "M-s-t") 'tab-bar-new-tab)
+    (define-key tab-bar-map (kbd "M-s-x") 'tab-bar-close-tab)
+    )
+  )
+(define-key tab-bar-history-mode-map (kbd "M-s-f") 'tab-bar-history-forward)
+(define-key tab-bar-history-mode-map (kbd "M-s-b") 'tab-bar-history-back)
+(provide 'config-frame)

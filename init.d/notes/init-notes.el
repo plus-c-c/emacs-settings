@@ -1,9 +1,6 @@
 (defcustom note-directory
   (expand-directory-name-auto-create
-   ""
-   (if (eq system-type 'gnu/linux)
-       "~/Documents/emacs/"
-     "D:/emacs/"))
+   "notes" "~/.emacs.d/")
   "The directory of my notes.")
 (defcustom bibliography-directory
   (expand-directory-name-auto-create
