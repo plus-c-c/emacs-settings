@@ -15,7 +15,7 @@
 (use-package projectile
   :ensure t
   :custom
-  (projectile-indexing-method 'alien)
+  (projectile-indexing-method 'hybrid)
   (projectile-git-submodule-command nil)
   (projectile-git-use-fd nil)
   (projectile-mode-line "Projectile")
