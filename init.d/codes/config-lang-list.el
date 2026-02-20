@@ -34,6 +34,6 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  org-babel-custom-load-languages)
-
+(setq org-src-preserve-indentation t)
 (setq treesit-language-source-alist treesit-language-source-alist-custom)
 (provide 'config-lang-list)
