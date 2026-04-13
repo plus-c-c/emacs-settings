@@ -1,7 +1,5 @@
 (use-package racket-mode
   :ensure t
-  :config
-  (add-to-list 'language-modes-list 'racket-mode)
   :defer t
   :mode ("\\.rktl\\'" . racket-mode)
   )

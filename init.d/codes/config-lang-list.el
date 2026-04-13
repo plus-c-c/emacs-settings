@@ -29,6 +29,10 @@
 (require 'config-plantuml)
 (require 'config-mermaid)
 
+(require 'config-java)
+(require 'config-android)
+
+
 (require 'config-typescript)
 
 (org-babel-do-load-languages

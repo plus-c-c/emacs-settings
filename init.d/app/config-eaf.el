@@ -58,5 +58,5 @@
 (use-package eaf-video-editor :after eaf)
 (use-package eaf-org-previewer :after eaf)
 (use-package eaf-markdown-previewer :after eaf)
-
+(use-package eaf-file-sender :after eaf)
 (provide 'config-eaf)
