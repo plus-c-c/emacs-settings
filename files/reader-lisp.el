@@ -1,5 +1,0 @@
-(add-to-list 'load-path (expand-file-name "files/reader" user-emacs-directory))
-(if (eq system-type 'gnu/linux)
-    (require 'reader-linux)
-  (require 'reader-win))
-(provide 'reader-lisp)
