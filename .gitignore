@@ -1,0 +1,12 @@
+*
+!init.el
+!early-init.el
+!init.d
+!init.d/*
+!init.d/**/*
+!site-lisp
+!site-lisp/*
+!site-lisp/**/*
+!.gitignore
+!.gitmodules
+!README.md
