@@ -78,7 +78,9 @@ def handle_request(msg):
                 "textDocumentSync": {"openClose": True, "change": 1, "save": True},
                 "hoverProvider": True,
                 "completionProvider": {"resolveProvider": False, "triggerCharacters": ["(", " ", "-"]},
-                "publishDiagnostics": True
+                "publishDiagnostics": True,
+                "bracketHierarchyProvider": True,
+                "bracketStructureProvider": True
             }
         }}
     
@@ -109,6 +111,27 @@ def handle_request(msg):
         form = f'(elisp-lsp-complete-json "{uri}" {line} {char})'
         result = daemon_eval_json(form)
         return {"jsonrpc": "2.0", "id": msg_id, "result": result or {"isIncomplete": False, "items": []}}
+    
+    elif method == "textDocument/bracketHierarchy":
+        td = params.get("textDocument", {})
+        uri = td.get("uri", "")
+        pos = params.get("position", {})
+        line = pos.get("line", 0)
+        char = pos.get("character", 0)
+        
+        form = f'(elisp-lsp-bracket-hierarchy-json "{uri}" {line} {char})'
+        result = daemon_eval_json(form)
+        return {"jsonrpc": "2.0", "id": msg_id, "result": result}
+    
+    elif method == "textDocument/bracketStructure":
+        td = params.get("textDocument", {})
+        uri = td.get("uri", "")
+        text = td.get("text", "")
+        
+        escaped = text.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n")
+        form = f'(elisp-lsp-bracket-structure-json "{uri}" "{escaped}")'
+        result = daemon_eval_json(form)
+        return {"jsonrpc": "2.0", "id": msg_id, "result": result}
     
     elif method == "textDocument/didOpen":
         td = params.get("textDocument", {})

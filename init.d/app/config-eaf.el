@@ -62,7 +62,6 @@ before the focus-change handler can properly route it."
             (let ((hyprctl (format "HYPRLAND_INSTANCE_SIGNATURE=%s hyprctl" sig)))
               (shell-command-to-string (format "%s dispatch focuswindow pid:%d" hyprctl (emacs-pid)))))
           (when (eaf-epc-live-p eaf-epc-process)
-            ;; Force show all visible EAF buffers
             (dolist (window (window-list (selected-frame)))
               (with-current-buffer (window-buffer window)
                 (when (derived-mode-p 'eaf-mode)

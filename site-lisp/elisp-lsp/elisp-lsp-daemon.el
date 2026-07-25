@@ -2,6 +2,7 @@
 ;;; Commentary: Functions loaded into Emacs daemon to handle LSP operations.
 ;;; Code:
 (require 'json)
+(require 'elisp-lsp-brackets)
 
 (defvar elisp-lsp-daemon-initialized nil)
 
@@ -84,9 +85,10 @@
                 :items (vconcat (nreverse completions))))))))
 
 (defun elisp-lsp-get-diagnostics (uri)
-  "Diagnostics."
+  "Diagnostics from byte-compile + bracket analysis."
   (let ((path (if (string-prefix-p "file://" uri) (substring uri 7) uri))
         (diags '()))
+    ;; Byte-compile diagnostics
     (when (and path (file-exists-p path))
       (let ((temp-file (make-temp-file "elisp-lsp-check")))
         (with-temp-file temp-file (insert-file-contents path))
@@ -107,8 +109,14 @@
                           :source "byte-compile")
                     diags)))
           (kill-buffer))
-        (ignore-errors (delete-file temp-file)))
-      (vconcat (nreverse diags)))))
+        (ignore-errors (delete-file temp-file))))
+    ;; Bracket diagnostics
+    (let* ((buf (elisp-lsp--get-buffer uri))
+           (text (when buf (with-current-buffer buf (buffer-string))))
+           (bracket-diags (when text (elisp-lsp-bracket-diagnostics uri text))))
+      (when bracket-diags
+        (setq diags (append diags (append bracket-diags nil)))))
+    (vconcat (nreverse diags))))
 
 (defun elisp-lsp-process-message (message-json)
   "Process message."
@@ -125,7 +133,9 @@
                          :hoverProvider t
                          :completionProvider (list :resolveProvider json-false
                                                    :triggerCharacters ["(" " " "-"])
-                         :publishDiagnostics t))))
+                         :publishDiagnostics t
+                         :bracketHierarchyProvider t
+                         :bracketStructureProvider t))))
       ("textDocument/hover"
        (setq result
              (elisp-lsp-hover
@@ -163,6 +173,22 @@
              (princ (elisp-lsp--make-notification
                      "textDocument/publishDiagnostics"
                      (list :uri uri :diagnostics diags)))))))
+      ("textDocument/bracketHierarchy"
+       (let* ((uri (plist-get (plist-get params :textDocument) :uri))
+              (buf (elisp-lsp--get-buffer uri))
+              (text (when buf (with-current-buffer buf (buffer-string)))))
+         (setq result
+               (elisp-lsp-bracket-hierarchy
+                uri text
+                (plist-get (plist-get params :position) :line)
+                (plist-get (plist-get params :position) :character)))))
+      ("textDocument/bracketStructure"
+       (let* ((uri (plist-get (plist-get params :textDocument) :uri))
+              (text (or (plist-get (plist-get params :textDocument) :text)
+                        (let ((buf (elisp-lsp--get-buffer uri)))
+                          (when buf (with-current-buffer buf (buffer-string)))))))
+         (setq result
+               (elisp-lsp-bracket-structure uri text))))
       (_ nil))
     (when id (elisp-lsp--make-response id result))))
 
@@ -179,6 +205,16 @@
 (defun elisp-lsp-diagnostics-json (uri)
   "Diagnostics, print JSON to stdout."
   (let ((result (elisp-lsp-get-diagnostics uri)))
+    (princ (if result (json-encode result) "null"))))
+
+(defun elisp-lsp-bracket-hierarchy-json (uri text line character)
+  "Bracket hierarchy, print JSON to stdout."
+  (let ((result (elisp-lsp-bracket-hierarchy uri text line character)))
+    (princ (if result (json-encode result) "null"))))
+
+(defun elisp-lsp-bracket-structure-json (uri text)
+  "Bracket structure, print JSON to stdout."
+  (let ((result (elisp-lsp-bracket-structure uri text)))
     (princ (if result (json-encode result) "null"))))
 
 (provide 'elisp-lsp-daemon)
