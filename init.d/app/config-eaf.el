@@ -16,9 +16,15 @@
 
   ;; Detect Hyprland via hyprctl presence (XDG_CURRENT_DESKTOP is not available
   ;; in systemd user service). Must be set before EAF loads so defvar picks it up.
+  ;; Also fix eaf--on-hyprland-p which checks XDG_CURRENT_DESKTOP — advise it
+  ;; to fallback to hyprctl detection when the env var is empty.
   (when (executable-find "hyprctl")
     (setq eaf-wm-name "wlroots wm"
-          eaf-is-member-of-focus-fix-wms t))
+          eaf-is-member-of-focus-fix-wms t)
+    (with-eval-after-load 'eaf-compat
+      (defun eaf--on-hyprland-p ()
+        (or (string-equal (getenv "XDG_CURRENT_DESKTOP") "Hyprland")
+            (executable-find "hyprctl")))))
 
   :config
   ;; Daemon mode: start EAF after the first frame is fully created.
@@ -105,7 +111,16 @@ before the focus-change handler can properly route it."
   :custom (eaf-pdf-dark-mode nil)
   )
 
-(use-package eaf-all-the-icons  :after all-the-icons)
+;; eaf-all-the-icons: wrapper at extension/eaf-all-the-icons.el, but
+;; extension/eaf-all-the-icons/ subdir shadows it in load-path.
+;; Also the sub-file provides 'eaf-all-the-icons-sub but is named eaf-all-the-icons.el,
+;; so (require 'eaf-all-the-icons-sub) always fails. Load both directly.
+(let ((eaf-base (expand-file-name "site-lisp/emacs-application-framework"
+                                   user-emacs-directory)))
+  (let ((sub (expand-file-name "extension/eaf-all-the-icons/eaf-all-the-icons.el" eaf-base))
+        (wrapper (expand-file-name "extension/eaf-all-the-icons.el" eaf-base)))
+    (when (file-exists-p sub) (load sub nil t))
+    (when (file-exists-p wrapper) (load wrapper nil t))))
 
 (if (eq system-type 'gnu/linux)
     (use-package eaf-file-manager
