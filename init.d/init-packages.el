@@ -35,6 +35,13 @@
   (auto-package-update-delete-old-versions t)
   (auto-package-update-interval 4)
   :config
+  ;; Sync git submodules after each package update cycle
+  (add-hook 'auto-package-update-after-hook
+            (lambda ()
+              (let ((default-directory "~/.emacs.d/"))
+                (when (file-exists-p ".gitmodules")
+                  (start-process "submodule-sync" nil
+                                 "git" "submodule" "update" "--init" "--remote")))))
   (auto-package-update-maybe))
 
 (provide 'init-packages)
