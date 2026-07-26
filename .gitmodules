@@ -13,3 +13,6 @@
 [submodule "site-lisp/guess-word"]
 	path = site-lisp/guess-word
 	url = https://github.com/Qquanwei/emacs-guess-word-game.git
+[submodule "site-lisp/opencode"]
+	path = site-lisp/opencode
+	url = https://codeberg.org/sczi/opencode.el.git

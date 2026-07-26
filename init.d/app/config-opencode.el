@@ -1,9 +1,8 @@
 ;;; config-opencode.el --- OpenCode AI integration -*- lexical-binding: t -*-
 
-;; :vc is built-in in Emacs 30.2 — installs from Codeberg automatically.
+;; opencode.el loaded from site-lisp submodule (not :vc).
 ;; Dependencies (magit, markdown-mode, plz, etc.) must be in package archives.
 (use-package opencode
-  :vc (:url "https://codeberg.org/sczi/opencode.el.git" :rev :newest)
   :bind ("C-c o" . hydra-opencode/body)
   :custom
   (opencode-terminal-type 'vterm)
