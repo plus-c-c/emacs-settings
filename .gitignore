@@ -7,6 +7,8 @@
 !site-lisp
 !site-lisp/*
 !site-lisp/**/*
+site-lisp/**/__pycache__
+site-lisp/**/*.elc
 !.gitignore
 !.gitmodules
 !README.md
