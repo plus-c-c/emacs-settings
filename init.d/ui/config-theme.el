@@ -8,7 +8,7 @@
 (load-theme 'dracula t)
 ;; Re-apply fonts — load-theme resets default face to tty
 (cabins--font-setup)
-(set-face-attribute 'default nil :height 110)
+(set-face-attribute 'default nil :height (round (* 55 emacs-hidpi-scale)))
 (use-package page-break-lines :ensure t
   :diminish page-break-lines-mode)
 

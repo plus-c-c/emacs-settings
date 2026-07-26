@@ -23,7 +23,7 @@
   (org-modules nil)
   (org-image-actual-width '(1024 512 256))
   :config
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.5))
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale (* 1.25 emacs-hidpi-scale)))
   (add-to-list 'org-file-apps '("\\.pdf\\'" . eaf-org-open-file))
   (add-to-list 'org-file-apps '("\\.x?html?\\'" . eaf-org-open-file)))
 (require 'config-display)
