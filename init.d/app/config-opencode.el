@@ -3,6 +3,7 @@
 ;; opencode.el loaded from site-lisp submodule (not :vc).
 ;; Dependencies (magit, markdown-mode, plz, etc.) must be in package archives.
 (use-package opencode
+  :load-path "site-lisp/opencode"
   :bind ("C-c o" . hydra-opencode/body)
   :custom
   (opencode-terminal-type 'vterm)
