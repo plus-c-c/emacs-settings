@@ -15,7 +15,16 @@
                    (getenv "HTTP_PROXY") (getenv "HTTPS_PROXY"))))
     (when proxy
       (setq plz-curl-default-args
-            (append '("--noproxy" "localhost") plz-curl-default-args)))))
+            (append '("--noproxy" "localhost") plz-curl-default-args))))
+
+  ;; Fix json-parse-error in event handler timer
+  (defun opencode--handle-global-event--safe (orig-fn event)
+    "Wrap ORIG-FN to catch json-parse-error from malformed SSE events."
+    (condition-case _err
+        (funcall orig-fn event)
+      (json-parse-error nil)))
+  (advice-add 'opencode--handle-global-event :around
+              #'opencode--handle-global-event--safe))
 
 (defhydra hydra-opencode (:color blue :hint nil)
   "
