@@ -9,7 +9,7 @@
 (defvar cabins--fonts-default '("SauceCodePro Nerd Font" "Cascadia Code PL"  "Menlo" "Consolas"))
 (defvar cabins--fonts-unicode '("Segoe UI Symbol" "Symbola" "Symbol"))
 (defvar cabins--fonts-emoji '("Segoe UI Symbol" "Noto Sans Symbols 2" "Noto Sans Symbols"))
-(defvar cabins--fonts-cjk '("WenQuanYi Micro Hei" "Microsoft Yahei"))
+(defvar cabins--fonts-cjk '("WenQuanYi Micro Hei Mono" "WenQuanYi Zen Hei Mono" "Microsoft Yahei"))
 (defun cabins--set-font-common (character font-list &optional scale-factor)
   "Set fonts for multi CHARACTER from FONT-LIST and modify style with SCALE-FACTOR."
 
