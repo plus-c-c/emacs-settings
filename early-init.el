@@ -53,7 +53,7 @@
   (setq locale-coding-system 'utf-8))
 
 ;; Frame appearance — set font before frame creation to prevent layout shift
-(add-to-list 'default-frame-alist '(font . "SauceCodePro Nerd Font"))
+(add-to-list 'default-frame-alist '(font . "SauceCodePro Nerd Font Mono"))
 (add-to-list 'default-frame-alist '(background-color . "#282a36"))
 (provide 'early-init)
 ;;; early-init.el ends here
