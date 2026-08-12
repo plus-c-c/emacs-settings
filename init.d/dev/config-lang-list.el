@@ -37,6 +37,8 @@
 
 (require 'config-typescript)
 
+(require 'config-lua)
+
 (org-babel-do-load-languages
  'org-babel-load-languages
  org-babel-custom-load-languages)
