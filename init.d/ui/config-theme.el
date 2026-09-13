@@ -4,8 +4,8 @@
 
   :if (display-graphic-p))
 
-(use-package dracula-theme :ensure t)
-(load-theme 'dracula t)
+(use-package modus-themes :ensure t)
+(load-theme 'modus-operandi t)
 ;; Re-apply fonts — load-theme resets default face to tty
 (cabins--font-setup)
 (set-face-attribute 'default nil :height (round (* 55 emacs-hidpi-scale)))
