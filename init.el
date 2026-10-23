@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (defvar emacs-config-path (expand-file-name "init.d" user-emacs-directory))
 (add-to-list 'load-path emacs-config-path)
 (require 'init-load-path)
