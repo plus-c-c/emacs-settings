@@ -244,7 +244,7 @@ earlier messages are fetched (for state correctness) but not displayed."
         (propertize (format "[%s tool: display skipped]\n" tool)
                     'face 'shadow)))))
 
-  (advice-add 'opencode--insert-tool-block :around #'opencode-status--insert-tool-block-around))
+  (advice-add 'opencode--insert-tool-block :around #'opencode-status--insert-tool-block-around)))
 
 (provide 'config-opencode-status)
 ;;; config-opencode-status.el ends here
