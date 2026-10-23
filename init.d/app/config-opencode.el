@@ -4,6 +4,7 @@
 ;; Dependencies (magit, markdown-mode, plz, etc.) must be in package archives.
 (use-package opencode
   :load-path "site-lisp/opencode"
+  :demand t
   :bind ("C-c o" . hydra-opencode/body)
   :custom
   (opencode-terminal-type 'vterm)
@@ -33,8 +34,8 @@
  _o_ Start          _c_ Connect       _d_ Disconnect
  _n_ New Session    _s_ Sessions      _p_ Projects
  _f_ Search         _w_ Worktree      _i_ Idle
- _l_ Visit Idle
- _S_ Sidebar        _v_ Show/Hide     _q_ Quit
+ _l_ Visit Idle     _S_ Sidebar       _v_ Show/Hide
+ _q_ Quit
 "
   ("o" opencode)
   ("n" opencode-new-session)
@@ -58,20 +59,17 @@
  _x_ Kill            _b_ Buffer         _v_ Select Variant
  _r_ Rename          _R_ Region         _a_ Cycle Agent
  _F_ Fork            _A_ Subagent       _M_ Toggle MCP
- _k_ Skill           _Q_ Delivery
- _C_ Compact         _/_ Slash Cmd
- _X_ Abort
+ _C_ Compact         _/_ Slash Cmd      _k_ Skill
+ _X_ Abort           _Q_ Delivery
 ^^^^^^^────────────────────────── ^^^^^^^──────────────────────────
  ^Navigate^          ^Misc^
 ^^^^^^^────────────────────────── ^^^^^^^──────────────────────────
- _s_ Select          _y_ Yank Code
- _c_ Child           _Y_ Copy Chat
- _p_ Parent          _t_ Scroll Top
- _i_ Idle            _L_ Consult
- _l_ Last Idle       _o_ Show
- _d_ Diagnostics     _E_ Export
- _I_ Import          _T_ Stats
- _P_ Saved Perms
+ _s_ Select          _y_ Yank Code     _o_ Show
+ _c_ Child           _Y_ Copy Chat     _z_ Hide
+ _p_ Parent          _t_ Scroll Top    _S_ Sidebar
+ _i_ Idle            _L_ Consult       _d_ Diagnostics
+ _l_ Last Idle       _E_ Export        _I_ Import
+ _P_ Saved Perms     _T_ Stats
 "
   ;; Session
   ("n" opencode-new-session)
