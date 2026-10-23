@@ -46,6 +46,8 @@
   ("w" opencode-new-worktree)
   ("i" opencode-select-idle)
   ("l" opencode-visit-last-idle)
+  ("S" opencode-sidebar-toggle :color blue)
+  ("v" opencode-toggle :color blue)
   ("q" nil "quit" :color blue))
 
 (defhydra hydra-opencode-session (:color blue :hint nil)
