@@ -42,7 +42,7 @@
        )
 
 (use-package eaf-interleave
-  :after (org-roam eaf)
+  :after eaf
   :defer 0.5
   :custom
   (eaf-interleave-org-notes-dir-list (cons interleave-path nil))

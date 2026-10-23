@@ -14,6 +14,10 @@
   (when (daemonp)
     (setq eaf-start-python-process-when-require nil))
 
+  ;; AMD/VA-API systems: avoid Qt trying the NVIDIA VDPAU backend.
+  (when (file-exists-p "/usr/lib/vdpau/libvdpau_va_gl.so")
+    (setenv "VDPAU_DRIVER" "va_gl"))
+
   ;; Detect Hyprland via hyprctl presence (XDG_CURRENT_DESKTOP is not available
   ;; in systemd user service). Must be set before EAF loads so defvar picks it up.
   ;; Also fix eaf--on-hyprland-p which checks XDG_CURRENT_DESKTOP — advise it
