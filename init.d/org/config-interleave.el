@@ -15,7 +15,9 @@
    (eaf-interleave-open-notes-file-auto-create)
    (let ((buffer-org (concat (file-name-base eaf--buffer-url) ".org"))
          (buffer-app (eaf-interleave--find-buffer eaf--buffer-url))
-         (page (number-to-string (eaf-interleave--pdf-viewer-current-page eaf--buffer-url))))
+         (page (car (split-string
+                     (eaf-interleave--pdf-viewer-current-page-y eaf--buffer-url)
+                     ":"))))
      (switch-to-buffer buffer-org)
      (let ((pos (point-max)))
        (switch-to-buffer buffer-app)
