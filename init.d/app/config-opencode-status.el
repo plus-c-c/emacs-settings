@@ -14,20 +14,6 @@ earlier messages are fetched (for state correctness) but not displayed."
 (defvar opencode-status--spinner-index 0)
 (defvar opencode-status--spinner-timer nil)
 
-(defvar opencode-status--lsp-servers nil
-  "Cached list of connected LSP servers from opencode server.")
-
-(defvar opencode-status--lsp-abbrevs
-  '(("pyright" . "py")
-    ("typescript-language-server" . "ts")
-    ("bash-language-server" . "sh")
-    ("clangd" . "c")
-    ("json-language-server" . "json")
-    ("elisp-lsp-server" . "el")
-    ("racket-langserver" . "rkt")
-    ("jdtls" . "java"))
-  "Abbreviation map for LSP server IDs in mode-line.")
-
 (defvar opencode-status--title-aliases
   '(("build Big Pickle" . "⚡BP")
     ("build" . "⚡B"))
@@ -74,36 +60,6 @@ earlier messages are fetched (for state correctness) but not displayed."
     (cancel-timer opencode-status--spinner-timer)
     (setq opencode-status--spinner-timer nil)))
 
-;;; --- LSP ---
-
-(defun opencode-status--refresh-lsp ()
-  "Fetch LSP server list from opencode server and cache it."
-  (when (and (boundp 'opencode-api-url) opencode-api-url)
-    (opencode-api-lsp servers
-      (setq opencode-status--lsp-servers servers)
-      (force-mode-line-update))))
-
-(defun opencode-status--lsp-string ()
-  "Return LSP display string based on window width.
-Returns empty string if no LSP servers or window too narrow."
-  (let ((servers opencode-status--lsp-servers)
-        (w (window-width)))
-    (when (and servers (> (length servers) 0) (>= w 115))
-      (if (< w 130)
-          (format " L:%d" (length servers))
-        (let ((names (mapcar (lambda (s)
-                              (or (alist-get (alist-get 'id s)
-                                            opencode-status--lsp-abbrevs
-                                            nil nil #'equal)
-                                  (opencode-status--truncate
-                                   (alist-get 'name s) 3)))
-                            servers)))
-          (format " %s" (string-join names "+")))))))
-
-(defun opencode-status--start-lsp-poll ()
-  "Start polling LSP status every 10 seconds."
-  (run-with-timer 0 10 #'opencode-status--refresh-lsp))
-
 ;;; --- Mode-line ---
 
 (defun opencode-status--network-indicator ()
@@ -147,27 +103,6 @@ Returns empty string if no LSP servers or window too narrow."
 
   (advice-add 'opencode--replay-session-messages :around
               #'opencode-status--replay-truncate)
-
-  ;; --- Advice: show retry status in buffer ---
-
-  (defun opencode-status--handle-retry (session-id data)
-    "Show retry status with visual indicator in SESSION-ID buffer."
-    (opencode--with-session-buffer session-id
-      (opencode--output
-        (propertize
-         (format "🔄 Retrying... (%s)" (or (alist-get 'message data) ""))
-         'face 'warning))
-      (opencode--output "\n")))
-
-  (defun opencode-status--handle-message-around (orig-fun message)
-    "Advice: intercept retry messages before ORIG-FUN handles them."
-    (let-alist message
-      (if (and (equal .type "session.status")
-               (equal .data.status "retry"))
-          (opencode-status--handle-retry .sessionID .data)
-        (funcall orig-fun message))))
-
-  (advice-add 'opencode--handle-message :around #'opencode-status--handle-message-around)
 
   ;; --- Advice: scroll to end after replay ---
 
@@ -234,23 +169,25 @@ Returns empty string if no LSP servers or window too narrow."
         (list (propertize title 'face 'bold) " " mode-line-process))))
 
   (defun opencode--session-status-indicator ()
-    "Return mode line indicator: net, spinner, agent, model, ctx, labels, status, lsp."
+    "Return mode line indicator: net, spinner, agent, model, ctx, labels, status."
     (let-alist opencode-session-agent
       (let* ((busy (string= opencode-session-status "busy"))
              (spinner (if busy (opencode-status--next-spinner) " "))
              (net (opencode-status--network-indicator))
              (agent (pcase .name
                       ("Planner-Sisyphus" "Plan")
-                      (_ (opencode-status--truncate .name 8))))
+                      ((pred stringp) (opencode-status--truncate .name 8))
+                      (_ "?")))
              (model (opencode--current-model))
              (model-name (if model (opencode-status--truncate (alist-get 'name model) 12) ""))
              (variant (when (and .variant model)
                         (propertize (format " %s" .variant)
                                     'face '(bold opencode-request-margin-highlight))))
-             (context-used (if (and opencode-session-tokens model
-                                    (map-nested-elt model '(limit context)))
+             (limit (and model (map-nested-elt model '(limit context))))
+             (context-used (if (and (> opencode-session-tokens 0)
+                                    limit (> limit 0))
                                (let ((pct (* 100 (/ (float opencode-session-tokens)
-                                                    (map-nested-elt model '(limit context))))))
+                                                    limit))))
                                  (propertize (format "%.0f%%" pct)
                                              'face (cond ((> pct 80) 'error)
                                                          ((> pct 60) 'warning)
@@ -258,7 +195,6 @@ Returns empty string if no LSP servers or window too narrow."
                              ""))
              (labels (opencode-status--context-count))
              (status (if busy "*" ">"))
-             (lsp (opencode-status--lsp-string))
              (w (window-width)))
         (if busy
             (opencode-status--start-spinner)
@@ -269,19 +205,15 @@ Returns empty string if no LSP servers or window too narrow."
          ((< w 115)
           (format " %s%s %s %s %s %s " net spinner agent model-name context-used status))
          (t
-          (format " %s%s %s %s%s %s %s %s%s "
+          (format " %s%s %s %s%s %s %s %s "
                   net spinner agent model-name (or variant "")
-                  context-used labels status lsp))))))
+                  context-used labels status)))))
 
   (defun opencode-status--set-mode-line ()
     "Set custom mode-line format for opencode session buffers."
     (setq-local mode-line-format '(:eval (opencode-status--mode-line))))
 
   (add-hook 'opencode-session-mode-hook #'opencode-status--set-mode-line)
-
-  ;; --- LSP polling ---
-
-  (add-hook 'opencode-session-mode-hook #'opencode-status--start-lsp-poll)
 
   ;; --- Advice: enhanced error display ---
 

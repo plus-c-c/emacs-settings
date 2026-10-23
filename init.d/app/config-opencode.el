@@ -57,11 +57,11 @@
  _C_ Compact         _/_ Slash Cmd
  _X_ Abort
 ^^^^^^^────────────────────────── ^^^^^^^──────────────────────────
- ^Navigate^          ^Share^            ^Misc^
+ ^Navigate^          ^Misc^
 ^^^^^^^────────────────────────── ^^^^^^^──────────────────────────
- _s_ Select          _h_ Share          _y_ Yank Code
- _c_ Child           _u_ Unshare        _Y_ Copy Chat
- _p_ Parent          _U_ Unshare All    _t_ Scroll Top
+ _s_ Select          _y_ Yank Code
+ _c_ Child           _Y_ Copy Chat
+ _p_ Parent          _t_ Scroll Top
  _i_ Idle            _L_ Consult
  _l_ Last Idle
 "
@@ -89,10 +89,7 @@
   ("p" opencode-open-parent :color blue)
   ("i" opencode-select-idle :color blue)
   ("l" opencode-visit-last-idle :color blue)
-  ;; Share
-  ("h" opencode-share-session :color blue)
-  ("u" opencode-unshare-session)
-  ("U" opencode-unshare-all-sessions)
+  ;; Misc
   ("L" opencode-consult-sessions :color blue)
   ;; Misc
   ("y" opencode-yank-code-block)
