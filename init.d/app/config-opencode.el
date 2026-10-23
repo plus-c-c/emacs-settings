@@ -32,8 +32,9 @@
 ^^^^^^^^^^^^^^^^^^^^──────────────────────────────────────
  _o_ Start          _c_ Connect       _d_ Disconnect
  _n_ New Session    _s_ Sessions      _p_ Projects
- _w_ Worktree       _i_ Idle          _l_ Visit Idle
- _q_ Quit
+ _f_ Search         _w_ Worktree      _i_ Idle
+ _l_ Visit Idle
+ _S_ Sidebar        _v_ Show/Hide     _q_ Quit
 "
   ("o" opencode)
   ("n" opencode-new-session)
@@ -41,6 +42,7 @@
   ("d" opencode-disconnect)
   ("p" opencode-select-project)
   ("s" opencode-select-open-session)
+  ("f" opencode-search-sessions)
   ("w" opencode-new-worktree)
   ("i" opencode-select-idle)
   ("l" opencode-visit-last-idle)
@@ -54,6 +56,7 @@
  _x_ Kill            _b_ Buffer         _v_ Select Variant
  _r_ Rename          _R_ Region         _a_ Cycle Agent
  _F_ Fork            _A_ Subagent       _M_ Toggle MCP
+ _k_ Skill           _Q_ Delivery
  _C_ Compact         _/_ Slash Cmd
  _X_ Abort
 ^^^^^^^────────────────────────── ^^^^^^^──────────────────────────
@@ -63,7 +66,10 @@
  _c_ Child           _Y_ Copy Chat
  _p_ Parent          _t_ Scroll Top
  _i_ Idle            _L_ Consult
- _l_ Last Idle
+ _l_ Last Idle       _o_ Show
+ _d_ Diagnostics     _E_ Export
+ _I_ Import          _T_ Stats
+ _P_ Saved Perms
 "
   ;; Session
   ("n" opencode-new-session)
@@ -77,6 +83,8 @@
   ("b" opencode-add-buffer-dwim)
   ("R" opencode-add-region)
   ("A" opencode-add-subagent)
+  ("k" opencode-add-skill)
+  ("Q" opencode-toggle-prompt-delivery)
   ("/" opencode-insert-slash-command)
   ;; Model
   ("m" opencode-select-model)
@@ -89,12 +97,20 @@
   ("p" opencode-open-parent :color blue)
   ("i" opencode-select-idle :color blue)
   ("l" opencode-visit-last-idle :color blue)
+  ("S" opencode-sidebar-toggle :color blue)
   ;; Misc
   ("L" opencode-consult-sessions :color blue)
   ;; Misc
   ("y" opencode-yank-code-block)
   ("Y" opencode-copy-conversation)
-  ("t" opencode-scroll-to-last-response-start))
+  ("t" opencode-scroll-to-last-response-start)
+  ("o" opencode-show)
+  ("z" opencode-hide)
+  ("d" opencode-send-diagnostics)
+  ("E" opencode-export-session)
+  ("I" opencode-import-session)
+  ("T" opencode-session-stats)
+  ("P" opencode-list-saved-permissions))
 
 (with-eval-after-load 'opencode-sessions
   (define-key opencode-session-mode-map (kbd "C-c h") #'hydra-opencode-session/body))
