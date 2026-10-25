@@ -144,6 +144,33 @@ The default nil follows the DrRacket workflow: edit, then run with
   (goto-char (or pos (point)))
   (newline))
 
+(defun racket-scratch--escape-string-body (string)
+  "Escape quotes and backslashes in STRING, preserving newlines."
+  (mapconcat (lambda (char)
+               (cond
+                ((eq char ?\") "\\\"")
+                ((eq char ?\\) "\\\\")
+                (t (char-to-string char))))
+             (string-to-list string)
+             ""))
+
+(defun racket-scratch--decode-string-result (text)
+  "Decode TEXT as a Racket string literal, or return nil."
+  (when (and (> (length text) 1)
+             (eq (aref text 0) ?\")
+             (eq (aref text (1- (length text))) ?\"))
+    (condition-case nil
+        (let ((value (car (read-from-string text))))
+          (and (stringp value) value))
+      (error nil))))
+
+(defun racket-scratch--result-text (text)
+  "Keep legal results as-is, but render multiline strings with real newlines."
+  (let ((value (racket-scratch--decode-string-result text)))
+    (if (and value (string-match-p "\n" value))
+        (concat "\"" (racket-scratch--escape-string-body value) "\"")
+      text)))
+
 (defun racket-scratch--show (string &optional pos)
   "Insert or echo STRING according to `racket-scratch--result-mode'.
 
@@ -159,7 +186,7 @@ empty result leaves an empty line."
         (racket-scratch--insert-empty-line pos)
       (goto-char (or pos (point)))
       (newline)
-      (insert string)
+      (insert (racket-scratch--result-text string))
       (newline)))
    ((eq racket-scratch--result-mode 'echo)
     (setq racket-scratch--result-mode nil)
