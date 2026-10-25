@@ -137,10 +137,9 @@ The default nil follows the DrRacket workflow: edit, then run with
     file))
 
 (defun racket-scratch--insert-empty-line (pos)
-  "Insert an empty result line at POS."
-  (save-excursion
-    (goto-char (or pos (point)))
-    (newline)))
+  "Insert an empty result line at POS and move point to it."
+  (goto-char (or pos (point)))
+  (newline))
 
 (defun racket-scratch--show (string &optional pos)
   "Insert STRING after the evaluated expression, or use racket-show.
