@@ -245,11 +245,21 @@ empty result leaves an empty line."
   (interactive)
   (racket-edit-switch-to-repl))
 
+(defun racket-scratch--lang-line-p (pos)
+  "Return non-nil when POS is on a #lang line."
+  (save-excursion
+    (goto-char pos)
+    (beginning-of-line)
+    (looking-at-p "#lang\\_>")))
+
 (defun racket-scratch--eval-last-sexp (mode)
   "Evaluate the preceding sexp, presenting the result according to MODE."
   (require 'racket-repl)
   (unless (racket--repl-session-id)
     (user-error "No Racket REPL; run the scratch first (C-c C-c)"))
+  (when (racket-scratch--lang-line-p
+         (save-excursion (racket--start-of-previous-expression)))
+    (user-error "Cannot evaluate the #lang line"))
   (setq racket-scratch--result-mode mode)
   (condition-case err
       (racket-eval-last-sexp)
@@ -281,6 +291,8 @@ to the REPL instead, because they are not ordinary expressions."
     (user-error "No Racket REPL; run the scratch first (C-c C-c)"))
   (let* ((beg (racket--start-of-previous-expression))
          (end (point)))
+    (when (racket-scratch--lang-line-p beg)
+      (user-error "Cannot evaluate the #lang line"))
     (if (racket-scratch--top-level-form-p beg end)
         (progn
           (racket-send-last-sexp)
@@ -338,6 +350,26 @@ is file-backed and has its own REPL.  Import project code with
     (when racket-scratch-auto-start
       (racket-scratch-run))
     buffer))
+
+;; Keep known ALSA/PortAudio device-probing noise out of *Warnings*.
+;; These messages are environment noise from FluidSynth/PortAudio, not
+;; Racket or Emacs Lisp diagnostics.
+(defun racket-scratch--backend-stderr-noise-p (string)
+  "Return non-nil for ALSA/PortAudio stderr noise in STRING."
+  (string-match-p
+   "\\(?:ALSA lib\\|pa_linux_alsa\\|alsa_snd_pcm\\|snd_pcm\\|pcm_oss\\|pcm_a52\\|pcm_usb_stream\\|pcm_dmix\\|pcm_route\\|confmisc\\)"
+   string))
+
+(defun racket-scratch--filter-backend-stderr (orig proc string)
+  "Filter known audio backend noise before ORIG logs stderr."
+  (unless (racket-scratch--backend-stderr-noise-p string)
+    (funcall orig proc string)))
+
+(with-eval-after-load 'racket-cmd
+  (advice-remove 'racket--cmd-process-stderr-filter
+                 #'racket-scratch--filter-backend-stderr)
+  (advice-add 'racket--cmd-process-stderr-filter :around
+              #'racket-scratch--filter-backend-stderr))
 
 (provide 'config-racket)
 ;;; config-racket.el ends here
