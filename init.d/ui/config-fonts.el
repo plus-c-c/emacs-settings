@@ -6,13 +6,17 @@
       (shell-command "./fonts.ps1")
     (all-the-icons-install-fonts t)))
 (require 'subr-x) ;; cl-loop来自这里
-(defvar cabins--fonts-default '("SauceCodePro Nerd Font Mono" "CaskaydiaCove Nerd Font Mono" "Consolas"))
+(defvar cabins--font-tui "CaskaydiaCove Nerd Font Mono"
+  "Preferred programming font, matching the OpenCode TUI.")
+(defvar cabins--fonts-default (list cabins--font-tui
+                                    "SauceCodePro Nerd Font Mono"
+                                    "Consolas"))
 (defvar cabins--fonts-unicode '("Segoe UI Symbol" "Symbola" "Symbol"))
 (defvar cabins--fonts-emoji '("Segoe UI Symbol" "Noto Sans Symbols 2" "Noto Sans Symbols"))
 (defvar cabins--fonts-cjk '("WenQuanYi Micro Hei Mono" "WenQuanYi Zen Hei Mono" "Microsoft Yahei"))
 ;; WenQuanYi Micro Hei Mono's CJK advance width is not exactly 2x
-;; SauceCodePro Nerd Font Mono's Latin width at the default size; the
-;; 1.18 scale makes CJK glyphs exactly double-width so org tables align.
+;; the configured Nerd Font's Latin width at the default size; the
+;; 1.18 scale keeps CJK glyphs close to double-width so org tables align.
 (push '("WenQuanYi Micro Hei Mono" . 1.18) face-font-rescale-alist)
 (push '("WenQuanYi Zen Hei Mono" . 1.18) face-font-rescale-alist)
 (defun cabins--set-font-common (character font-list &optional scale-factor frame)
@@ -48,8 +52,10 @@ argument can otherwise alter the default face family."
       (cabins--set-font-common 'emoji (if emoji-fonts emoji-fonts cabins--fonts-emoji) nil fr)
       (dolist (charset '(kana han bopomofo cjk-misc))
         (cabins--set-font-common charset (if cjk-fonts cjk-fonts cabins--fonts-cjk) nil fr))
-      (when frame
-        (cabins--set-font-common nil (if default-fonts default-fonts cabins--fonts-default) nil fr)))))
+      ;; Setting the unicode/emoji/CJK fontsets can change the default
+      ;; face's family as a side effect.  Re-apply the programming font
+      ;; last so the TUI font always wins for normal text.
+      (cabins--set-font-common nil (if default-fonts default-fonts cabins--fonts-default) nil fr))))
 ;; Set font size (height in 1/10pt: 55 * 2.0 = 110)
 (set-face-attribute 'default nil :height (round (* 55 emacs-hidpi-scale)))
 ;; In daemon mode there is no display at load time, so fonts and

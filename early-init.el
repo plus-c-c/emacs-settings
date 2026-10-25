@@ -52,7 +52,10 @@
   (prefer-coding-system 'utf-8)
   (setq locale-coding-system 'utf-8))
 
-;; Frame appearance — set font before frame creation to prevent layout shift
-(add-to-list 'default-frame-alist '(font . "SauceCodePro Nerd Font Mono"))
+;; Frame appearance — set font before frame creation to prevent layout shift.
+;; Use the same font as the OpenCode TUI (kitty: CaskaydiaCove Nerd Font Mono).
+(defvar cabins--font-tui "CaskaydiaCove Nerd Font Mono"
+  "Preferred programming font, matching the OpenCode TUI.")
+(add-to-list 'default-frame-alist (cons 'font cabins--font-tui))
 (provide 'early-init)
 ;;; early-init.el ends here
