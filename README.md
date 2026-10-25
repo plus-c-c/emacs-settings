@@ -52,6 +52,7 @@ Modular Emacs 30.2 configuration for multi-environment workflows (Linux/Hyprland
   - Java: JDTLS + java-debug DAP
   - R: ess-tracebug with custom hydra
   - Racket: racket-debug-mode with custom hydra
+  - Racket scratch: `M-x racket-scratch` / `C-c C-n`, with `C-j` eval+print and per-session REPL
 
 ### Applications (`app/`)
 - **OpenCode**: AI coding assistant with vterm (`C-c o`)
