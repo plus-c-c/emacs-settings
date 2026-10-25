@@ -58,6 +58,10 @@ Modular Emacs 30.2 configuration for multi-environment workflows (Linux/Hyprland
     - `C-M-x` evaluate defun and echo the value
     - `C-M-q` indent sexp (`prog-indent-sexp`; Racket equivalent of native `indent-pp-sexp`)
     - `C-c C-c` run, `C-c C-r` region, `C-c C-z` REPL, `C-c C-i` import
+    - Hot reload Emacs Lisp with:
+      `emacsclient --eval '(load-file "~/.emacs.d/init.d/dev/lang/config-racket.el")'`
+    - Racket modules are cached by the REPL; after changing Racket sources,
+      press `C-c C-c` to restart the scratch REPL
 
 ### Applications (`app/`)
 - **OpenCode**: AI coding assistant with vterm (`C-c o`)

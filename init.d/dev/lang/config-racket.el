@@ -260,24 +260,22 @@ to the REPL instead, because they are not ordinary expressions."
           (racket-scratch--insert-empty-line end))
       (racket-scratch--eval-last-sexp 'inline))))
 
-(defvar racket-scratch-import-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "f") #'racket-scratch-import-file)
-    (define-key map (kbd "m") #'racket-scratch-import-module)
-    map)
+;; Use defvar + define-key (rather than a let-built defvar value) so
+;; reloading this file in a running daemon updates existing keymaps.
+(defvar racket-scratch-import-map (make-sparse-keymap)
   "Keymap for importing modules into a Racket scratch.")
+(define-key racket-scratch-import-map (kbd "f") #'racket-scratch-import-file)
+(define-key racket-scratch-import-map (kbd "m") #'racket-scratch-import-module)
 
-(defvar racket-scratch-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c C-c") #'racket-scratch-run)
-    (define-key map (kbd "C-c C-r") #'racket-send-region)
-    (define-key map (kbd "C-c C-z") #'racket-scratch-switch-to-repl)
-    (define-key map (kbd "C-c C-i") racket-scratch-import-map)
-    (define-key map (kbd "C-j") #'racket-scratch-eval-print-last-sexp)
-    (define-key map (kbd "C-x C-e") #'racket-scratch-eval-last-sexp)
-    (define-key map (kbd "C-M-x") #'racket-scratch-eval-defun)
-    map)
+(defvar racket-scratch-mode-map (make-sparse-keymap)
   "Keymap for `racket-scratch-mode'.")
+(define-key racket-scratch-mode-map (kbd "C-c C-c") #'racket-scratch-run)
+(define-key racket-scratch-mode-map (kbd "C-c C-r") #'racket-send-region)
+(define-key racket-scratch-mode-map (kbd "C-c C-z") #'racket-scratch-switch-to-repl)
+(define-key racket-scratch-mode-map (kbd "C-c C-i") racket-scratch-import-map)
+(define-key racket-scratch-mode-map (kbd "C-j") #'racket-scratch-eval-print-last-sexp)
+(define-key racket-scratch-mode-map (kbd "C-x C-e") #'racket-scratch-eval-last-sexp)
+(define-key racket-scratch-mode-map (kbd "C-M-x") #'racket-scratch-eval-defun)
 
 (define-minor-mode racket-scratch-mode
   "Minor mode for a generic DrRacket-like Racket scratch."
