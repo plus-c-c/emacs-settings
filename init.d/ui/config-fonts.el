@@ -56,8 +56,9 @@ argument can otherwise alter the default face family."
       ;; face's family as a side effect.  Re-apply the programming font
       ;; last so the TUI font always wins for normal text.
       (cabins--set-font-common nil (if default-fonts default-fonts cabins--fonts-default) nil fr))))
-;; Set font size (height in 1/10pt: 55 * 2.0 = 110)
-(set-face-attribute 'default nil :height (round (* 55 emacs-hidpi-scale)))
+;; Set font size (height in 1/10pt: 60 * 2.0 = 120, i.e. 12pt;
+;; matches kitty/OpenCode TUI font_size 12.0)
+(set-face-attribute 'default nil :height (round (* 60 emacs-hidpi-scale)))
 ;; In daemon mode there is no display at load time, so fonts and
 ;; fontsets cannot be applied here.  A frame's fontset is created
 ;; independently of `fontset-default' and only takes effect once the
