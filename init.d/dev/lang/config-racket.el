@@ -119,7 +119,7 @@ The default nil follows the DrRacket workflow: edit, then run with
    "#lang %s\n\
 \n\
 ;; Racket scratch session\n\
-;; C-c C-c run / C-j eval+print / C-c C-r send region\n\
+;; C-c C-c run / C-j eval+print (module forms go to REPL) / C-c C-r send region\n\
 ;; C-c C-z REPL / C-c C-i f import file / C-c C-i m import module\n\
 \n\
 "
@@ -136,14 +136,24 @@ The default nil follows the DrRacket workflow: edit, then run with
       (insert (racket-scratch--starter lang)))
     file))
 
+(defun racket-scratch--insert-empty-line (pos)
+  "Insert an empty result line at POS."
+  (save-excursion
+    (goto-char (or pos (point)))
+    (newline)))
+
 (defun racket-scratch--show (string &optional pos)
-  "Insert STRING after the evaluated expression, or use racket-show."
+  "Insert STRING after the evaluated expression, or use racket-show.
+
+A void or empty result inserts an empty line, so C-j still leaves a
+clear transcript boundary."
   (if racket-scratch--inline-eval-p
       (progn
         (setq racket-scratch--inline-eval-p nil)
-        (unless (or (null string)
-                    (string-empty-p string)
-                    (string= string "#<void>"))
+        (if (or (null string)
+                (string-empty-p string)
+                (string= string "#<void>"))
+            (racket-scratch--insert-empty-line pos)
           (let ((text (replace-regexp-in-string "\n" "\n;;   " string)))
             (save-excursion
               (goto-char (or pos (point)))
@@ -175,6 +185,18 @@ The default nil follows the DrRacket workflow: edit, then run with
   (interactive "sRacket module to import: ")
   (racket-scratch--insert-after-lang (format "(require %s)" module)))
 
+(require 'subr-x)
+
+(defun racket-scratch--top-level-form-p (beg end)
+  "Return non-nil if BEG..END starts a module-level definition."
+  (let* ((text (string-trim (buffer-substring-no-properties beg end)))
+         (head (when (string-match "\\`(\\([^ \t\n()]+\\)" text)
+                 (match-string 1 text))))
+    (and head
+         (or (member head '("require" "provide" "module" "module*" "module+"
+                            "struct" "begin"))
+             (string-prefix-p "define" head)))))
+
 (defun racket-scratch-run ()
   "Run the current scratch file and create/refresh its REPL."
   (interactive)
@@ -189,17 +211,27 @@ The default nil follows the DrRacket workflow: edit, then run with
   (racket-edit-switch-to-repl))
 
 (defun racket-scratch-eval-print-last-sexp ()
-  "Evaluate the preceding sexp and insert its value, like *scratch* C-j."
+  "Evaluate the preceding sexp like *scratch* C-j.
+
+Expressions are evaluated and their value is inserted after the sexp.
+Module-level forms such as `require` and `define` are submitted to the
+REPL instead, because they are not ordinary expressions."
   (interactive)
   (require 'racket-repl)
   (unless (racket--repl-session-id)
     (user-error "No Racket REPL; run the scratch first (C-c C-c)"))
-  (setq racket-scratch--inline-eval-p t)
-  (condition-case err
-      (racket-eval-last-sexp)
-    (error
-     (setq racket-scratch--inline-eval-p nil)
-     (signal (car err) (cdr err)))))
+  (let* ((beg (racket--start-of-previous-expression))
+         (end (point)))
+    (if (racket-scratch--top-level-form-p beg end)
+        (progn
+          (racket-send-last-sexp)
+          (racket-scratch--insert-empty-line end))
+      (setq racket-scratch--inline-eval-p t)
+      (condition-case err
+          (racket-eval-last-sexp)
+        (error
+         (setq racket-scratch--inline-eval-p nil)
+         (signal (car err) (cdr err)))))))
 
 (defvar racket-scratch-import-map
   (let ((map (make-sparse-keymap)))
