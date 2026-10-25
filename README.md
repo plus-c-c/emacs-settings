@@ -52,7 +52,12 @@ Modular Emacs 30.2 configuration for multi-environment workflows (Linux/Hyprland
   - Java: JDTLS + java-debug DAP
   - R: ess-tracebug with custom hydra
   - Racket: racket-debug-mode with custom hydra
-  - Racket scratch: `M-x racket-scratch` / `C-c C-n`, with `C-j` eval+print and per-session REPL
+  - Racket scratch: `M-x racket-scratch` / `C-c C-n`, per-session REPL
+    - `C-j` eval+print: value on following line; void leaves an empty line
+    - `C-x C-e` evaluate last sexp and echo the value
+    - `C-M-x` evaluate defun and echo the value
+    - `C-M-q` indent sexp (`prog-indent-sexp`; Racket equivalent of native `indent-pp-sexp`)
+    - `C-c C-c` run, `C-c C-r` region, `C-c C-z` REPL, `C-c C-i` import
 
 ### Applications (`app/`)
 - **OpenCode**: AI coding assistant with vterm (`C-c o`)

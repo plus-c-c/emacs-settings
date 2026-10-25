@@ -110,8 +110,11 @@ The default nil follows the DrRacket workflow: edit, then run with
   "Default #lang used for new Racket scratch files."
   :type 'string)
 
-(defvar-local racket-scratch--inline-eval-p nil
-  "Non-nil while a C-j result should be inserted in the scratch buffer.")
+(defvar-local racket-scratch--result-mode nil
+  "How to present an asynchronous evaluation result.
+
+`inline' inserts the result into the scratch buffer (C-j).
+`echo' displays it in the echo area (C-x C-e / C-M-x).")
 
 (defun racket-scratch--starter (lang)
   "Return initial contents for a scratch using LANG."
@@ -142,25 +145,31 @@ The default nil follows the DrRacket workflow: edit, then run with
   (newline))
 
 (defun racket-scratch--show (string &optional pos)
-  "Insert STRING after the evaluated expression, or use racket-show.
+  "Insert or echo STRING according to `racket-scratch--result-mode'.
 
-A void or empty result inserts an empty line, so C-j still leaves a
-clear transcript boundary."
-  (if racket-scratch--inline-eval-p
-      (progn
-        (setq racket-scratch--inline-eval-p nil)
-        (if (or (null string)
-                (string-empty-p string)
-                (string= string "#<void>"))
-            (racket-scratch--insert-empty-line pos)
-          (let ((text (replace-regexp-in-string "\n" "\n;;   " string)))
-            (save-excursion
-              (goto-char (or pos (point)))
-              (insert " => " text)
-              (newline)))))
-    (if (fboundp 'racket-show-pseudo-tooltip)
-        (racket-show-pseudo-tooltip string pos)
-      (message "%s" string))))
+For inline printing, mirror `eval-print-last-sexp': put the value on
+the line after the expression and leave point after it.  A void or
+empty result leaves an empty line."
+  (cond
+   ((eq racket-scratch--result-mode 'inline)
+    (setq racket-scratch--result-mode nil)
+    (if (or (null string)
+            (string-empty-p string)
+            (string= string "#<void>"))
+        (racket-scratch--insert-empty-line pos)
+      (goto-char (or pos (point)))
+      (newline)
+      (insert string)
+      (newline)))
+   ((eq racket-scratch--result-mode 'echo)
+    (setq racket-scratch--result-mode nil)
+    (if (fboundp 'racket-show-echo-area)
+        (racket-show-echo-area string pos)
+      (message "%s" string)))
+   ((fboundp 'racket-show-pseudo-tooltip)
+    (racket-show-pseudo-tooltip string pos))
+   (t
+    (message "%s" string))))
 
 (defun racket-scratch--insert-after-lang (text)
   "Insert TEXT after the #lang line, or at the beginning."
@@ -209,12 +218,36 @@ clear transcript boundary."
   (interactive)
   (racket-edit-switch-to-repl))
 
+(defun racket-scratch--eval-last-sexp (mode)
+  "Evaluate the preceding sexp, presenting the result according to MODE."
+  (require 'racket-repl)
+  (unless (racket--repl-session-id)
+    (user-error "No Racket REPL; run the scratch first (C-c C-c)"))
+  (setq racket-scratch--result-mode mode)
+  (condition-case err
+      (racket-eval-last-sexp)
+    (error
+     (setq racket-scratch--result-mode nil)
+     (signal (car err) (cdr err)))))
+
+(defun racket-scratch-eval-last-sexp ()
+  "Evaluate the preceding sexp and echo its value, like *scratch* C-x C-e."
+  (interactive)
+  (racket-scratch--eval-last-sexp 'echo))
+
+(defun racket-scratch-eval-defun ()
+  "Evaluate the current definition and echo its value, like *scratch* C-M-x."
+  (interactive)
+  (save-excursion
+    (end-of-defun)
+    (racket-scratch--eval-last-sexp 'echo)))
+
 (defun racket-scratch-eval-print-last-sexp ()
   "Evaluate the preceding sexp like *scratch* C-j.
 
-Expressions are evaluated and their value is inserted after the sexp.
-Module-level forms such as `require` and `define` are submitted to the
-REPL instead, because they are not ordinary expressions."
+Expressions are evaluated and their value is inserted on the following
+lines.  Module-level forms such as `require` and `define` are submitted
+to the REPL instead, because they are not ordinary expressions."
   (interactive)
   (require 'racket-repl)
   (unless (racket--repl-session-id)
@@ -225,12 +258,7 @@ REPL instead, because they are not ordinary expressions."
         (progn
           (racket-send-last-sexp)
           (racket-scratch--insert-empty-line end))
-      (setq racket-scratch--inline-eval-p t)
-      (condition-case err
-          (racket-eval-last-sexp)
-        (error
-         (setq racket-scratch--inline-eval-p nil)
-         (signal (car err) (cdr err)))))))
+      (racket-scratch--eval-last-sexp 'inline))))
 
 (defvar racket-scratch-import-map
   (let ((map (make-sparse-keymap)))
@@ -246,6 +274,8 @@ REPL instead, because they are not ordinary expressions."
     (define-key map (kbd "C-c C-z") #'racket-scratch-switch-to-repl)
     (define-key map (kbd "C-c C-i") racket-scratch-import-map)
     (define-key map (kbd "C-j") #'racket-scratch-eval-print-last-sexp)
+    (define-key map (kbd "C-x C-e") #'racket-scratch-eval-last-sexp)
+    (define-key map (kbd "C-M-x") #'racket-scratch-eval-defun)
     map)
   "Keymap for `racket-scratch-mode'.")
 
